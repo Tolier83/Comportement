@@ -1,3 +1,4 @@
+package system;
 
 public class CObject {
 	public int x = 0;
