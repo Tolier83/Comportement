@@ -8,15 +8,22 @@ import system.CZoneAEviter;
 
 import javax.swing.*;
 
+import javax.swing.*;
 import java.awt.*;
+
 import java.awt.event.*;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class CMainPanel extends JPanel implements Observer,MouseListener  {
+public class CMainPanel extends JPanel implements Observer, MouseListener {
+
     private static final int BASE_COUNT = 3;
     private static final int AGENTS_COUNT = 30;
     private static final int NOURRITURE_COUNT = 2;
@@ -37,6 +44,8 @@ public class CMainPanel extends JPanel implements Observer,MouseListener  {
     public CMainPanel() {
         // Fond noir.
     	this.setBackground(new Color(128, 128, 128));
+
+    	// Gestion souris.
     	this.addMouseListener(this);
     }
     
@@ -44,14 +53,14 @@ public class CMainPanel extends JPanel implements Observer,MouseListener  {
         mEnv = CEnvironement.getInstance();
         mEnv.init(BASE_COUNT, AGENTS_COUNT, getWidth(), getHeight(),NOURRITURE_COUNT);
         mEnv.addObserver(this);
+        
         mTimer = new Timer();
         mTask = new TimerTask()
         {
         	@Override
         	public void run() {mEnv.update();}
         };
-        mTimer.scheduleAtFixedRate(mTask, TIMER_DELAY, TIMER_PERIOD);
-        		
+        mTimer.scheduleAtFixedRate(mTask, TIMER_DELAY, TIMER_PERIOD);		
     }
 
     @Override
@@ -71,44 +80,48 @@ public class CMainPanel extends JPanel implements Observer,MouseListener  {
         for(CNourriture n : mEnv.mNourritureList)
         {
         	n.afficher(pG);
-        }   
+        } 
+        for(CZoneAEviter z : mEnv.mZoneAEviterList)
+        {
+        	z.afficher(pG);
+        }
     }
+    
     
     @Override
     public void mouseClicked(MouseEvent e)
     {    	
-    	System.out.println("ouai");
+    	if (SwingUtilities.isLeftMouseButton(e)) {
+    		leftClickAction(e);
+    	} else {
+    		rightClickAction(e);
+    	}
+    }
+
+    public void leftClickAction(MouseEvent e)
+    {    	
     	if(incrColor > 10)
     		incrColor=0;
     	else
     	{
     		mEnv.mBaseList.add(new CBase(e.getX(), e.getY(), AGENTS_COUNT, mArrayColor[incrColor], 10));
     		incrColor++;
-    	}
+    	} 
+    }
+
+    public void rightClickAction(MouseEvent e) {
+        mEnv.mZoneAEviterList.add(new CZoneAEviter(e.getX(), e.getY(), 4.0));
     }
     
     @Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void mousePressed(MouseEvent e) {}
+    
     @Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void mouseReleased(MouseEvent e) {}
 
 	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseEntered(MouseEvent e) {}
 
 	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-    
-    
+	public void mouseExited(MouseEvent e) {}
 }

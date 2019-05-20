@@ -10,12 +10,14 @@ public class CEnvironement extends Observable {
     public double mHeight;
     public ArrayList<CBase> mBaseList;
     public ArrayList<CNourriture> mNourritureList;
+    public ArrayList<CZoneAEviter> mZoneAEviterList;
     
     //protected int mIterCounts = 0;
 
     private CEnvironement() {
     	mBaseList = new ArrayList<CBase>();
     	mNourritureList = new ArrayList<CNourriture>();
+    	mZoneAEviterList = new ArrayList<CZoneAEviter>();
     
         // Création du générateur aléatoire.
         mRandomGen = new Random();
@@ -30,7 +32,7 @@ public class CEnvironement extends Observable {
         
     public CNourriture catchNourriture(CNourriture pNourrite) {
         	pNourrite.decreaseSize();
-            // TODO CNAM : 2 lignes de code Ã  ajouter ici.
+            // TODO CNAM : 2 lignes de code Ã  ajouter ici.
         	return pNourrite;
     }
     
@@ -49,6 +51,7 @@ public class CEnvironement extends Observable {
     	{
     		mNourritureList.add(new CNourriture(x/2.0, y/2.0, Color.BLACK, 2.0));
     	}
+    	mZoneAEviterList.clear();
     }
     
     public void update()
