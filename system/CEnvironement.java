@@ -51,4 +51,13 @@ public class CEnvironement extends Observable {
     	}
     }
     
+    public void update()
+    {
+    	for(CBase b : mBaseList)
+    	{
+    		b.bougerAgents();
+    	}
+    	notifyObservers();
+    }
+    
 }

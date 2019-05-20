@@ -39,21 +39,26 @@ public class CMainPanel extends JPanel implements Observer {
         mEnv = CEnvironement.getInstance();
         mEnv.init(BASE_COUNT, AGENTS_COUNT, getWidth(), getHeight(),NOURRITURE_COUNT);
         mEnv.addObserver(this);
+        mTimer = new Timer();
+        mTask = new TimerTask()
+        		{
+        			@Override
+        			public void run() {mEnv.update();}
+        		};
+        		mTimer.scheduleAtFixedRate(mTask, TIMER_DELAY, TIMER_PERIOD);
+        		
     }
 
     @Override
-    public void update(Observable pObservable, Object pArg) {
-    	for(CBase b : mEnv.mBaseList)
-        {
-        	b.bougerAgents();
-        }
+    public void update(Observable pObservable, Object pArg) 
+    {
     	this.repaint();
     }
 
     @Override
     public void paintComponent(Graphics pG) {
         super.paintComponent(pG);
-
+        System.out.println("Paint");
         for(CBase b : mEnv.mBaseList)
         {
         	b.afficherBase(pG);
@@ -63,5 +68,6 @@ public class CMainPanel extends JPanel implements Observer {
         {
         	n.afficher(pG);
         }
+        
     }
 }

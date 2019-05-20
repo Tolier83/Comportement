@@ -7,10 +7,10 @@ import java.util.List;
 //Etat de combat -> recuperation de nourriture
 
 public class CAgent extends CObject {
-	protected final static double STEP = 3;
+	protected final static double STEP = 10;
 	protected final static double CHANGING_DIRECTION_PROB = 0.05;
 	public static final double DISTANCE_MIN = 5;
-	public static final double SIZE = 2;
+	public static final double SIZE = 5;
 	
 	protected CNourriture mLoading;
 	protected double mSpeedX;
