@@ -53,10 +53,12 @@ public class CEnvironement extends Observable {
     
     public void update()
     {
+    	System.out.println("BOUGER");
     	for(CBase b : mBaseList)
     	{
     		b.bougerAgents();
     	}
+    	setChanged();
     	notifyObservers();
     }
     

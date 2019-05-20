@@ -24,10 +24,10 @@ public class CMainPanel extends JPanel implements Observer {
     private static final int TIMER_DELAY = 0;
     private static final int TIMER_PERIOD = 10;
 
-    private Timer mTimer;
+    public Timer mTimer;
     boolean mInProgress = false;
-    private TimerTask mTask;
-    private CEnvironement mEnv;
+    public TimerTask mTask;
+    public CEnvironement mEnv;
 
 
     public CMainPanel() {
@@ -45,10 +45,10 @@ public class CMainPanel extends JPanel implements Observer {
         			@Override
         			public void run() {mEnv.update();}
         		};
-        		mTimer.scheduleAtFixedRate(mTask, TIMER_DELAY, TIMER_PERIOD);
+        mTimer.scheduleAtFixedRate(mTask, TIMER_DELAY, TIMER_PERIOD);
         		
     }
-
+    
     @Override
     public void update(Observable pObservable, Object pArg) 
     {
@@ -58,7 +58,7 @@ public class CMainPanel extends JPanel implements Observer {
     @Override
     public void paintComponent(Graphics pG) {
         super.paintComponent(pG);
-        System.out.println("Paint");
+    	System.out.println("DESSINER");
         for(CBase b : mEnv.mBaseList)
         {
         	b.afficherBase(pG);
@@ -68,6 +68,5 @@ public class CMainPanel extends JPanel implements Observer {
         {
         	n.afficher(pG);
         }
-        
     }
 }
