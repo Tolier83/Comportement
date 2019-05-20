@@ -9,12 +9,14 @@ import system.CZoneAEviter;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class CMainPanel extends JPanel implements Observer {
+public class CMainPanel extends JPanel implements Observer,MouseListener  {
     private static final int BASE_COUNT = 3;
     private static final int AGENTS_COUNT = 30;
     private static final int NOURRITURE_COUNT = 2;
@@ -23,16 +25,19 @@ public class CMainPanel extends JPanel implements Observer {
 
     private static final int TIMER_DELAY = 0;
     private static final int TIMER_PERIOD = 10;
-
-    public Timer mTimer;
+    int incrColor =0;
+    public Color[] mArrayColor = {Color.BLUE,Color.CYAN,Color.GRAY,Color.GREEN,Color.LIGHT_GRAY,Color.MAGENTA,Color.ORANGE,Color.PINK,Color.RED,Color.WHITE,Color.YELLOW};
+    
+    private Timer mTimer;
     boolean mInProgress = false;
-    public TimerTask mTask;
-    public CEnvironement mEnv;
+    private TimerTask mTask;
+    private CEnvironement mEnv;
 
 
     public CMainPanel() {
         // Fond noir.
     	this.setBackground(new Color(128, 128, 128));
+    	this.addMouseListener(this);
     }
     
     public void launch() {
@@ -41,14 +46,14 @@ public class CMainPanel extends JPanel implements Observer {
         mEnv.addObserver(this);
         mTimer = new Timer();
         mTask = new TimerTask()
-        		{
-        			@Override
-        			public void run() {mEnv.update();}
-        		};
+        {
+        	@Override
+        	public void run() {mEnv.update();}
+        };
         mTimer.scheduleAtFixedRate(mTask, TIMER_DELAY, TIMER_PERIOD);
         		
     }
-    
+
     @Override
     public void update(Observable pObservable, Object pArg) 
     {
@@ -58,7 +63,6 @@ public class CMainPanel extends JPanel implements Observer {
     @Override
     public void paintComponent(Graphics pG) {
         super.paintComponent(pG);
-    	System.out.println("DESSINER");
         for(CBase b : mEnv.mBaseList)
         {
         	b.afficherBase(pG);
@@ -67,6 +71,44 @@ public class CMainPanel extends JPanel implements Observer {
         for(CNourriture n : mEnv.mNourritureList)
         {
         	n.afficher(pG);
-        }
+        }   
     }
+    
+    @Override
+    public void mouseClicked(MouseEvent e)
+    {    	
+    	System.out.println("ouai");
+    	if(incrColor > 10)
+    		incrColor=0;
+    	else
+    	{
+    		mEnv.mBaseList.add(new CBase(e.getX(), e.getY(), AGENTS_COUNT, mArrayColor[incrColor], 10));
+    		incrColor++;
+    	}
+    }
+    
+    @Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+    @Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+    
+    
 }
