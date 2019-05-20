@@ -28,6 +28,25 @@ public class CEnvironement extends Observable {
 		return sInstance;
 	}
     
+    public void putDownNourriture(CNourriture pNourriture) {
+        pNourriture.increaseSize();
+    }
+    
+    public CNourriture catchNourriture(CNourriture pNourrite) {
+        if (pNourrite.mSize == 1) {
+        	pNourrite.decreaseSize();
+        	pNourrite.squareSize = 0;
+            // TODO CNAM : 2 lignes de code à ajouter ici.
+        	return pNourrite;
+        }
+        else {
+        	pNourrite.decreaseSize();
+        	
+            // TODO CNAM : 3 lignes de code à ajouter ici.
+        	return pNourrite;
+        }
+    }
+    
     public void init(int _nbBase, int _nbAgents, int x, int y, int _nbNourriture) 
     {  	
     	mWidth = x;
