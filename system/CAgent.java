@@ -23,11 +23,25 @@ public class CAgent extends CObject {
 		mSpeedY /= lLenght;
 	}
 	
-	//public CAgent(double pPosX, double pPosY) {
-	//	posX = pPosX;
-	//	posY = pPosY;
+	public CAgent(double pPosX, double pPosY) {
+		posX = pPosX;
+		posY = pPosY;
 		
-		
-	//}
+		mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+		mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+		normalize();
+	}
+	
+	public boolean isLoaded() {
+		return mBusy = true;
+	}
 
+	//public void updatePosition() {
+	//	posX += STEP * mSpeedX;
+	//	posY += STEP * mSpeedY;
+		
+	//	double lWidth = CEnvironement.getInstance().getWidth();
+	//	double lHeight = CEnvironement.getInstance().getHeight();
+	//	double minWidth = 0.0
+	//}
 }
