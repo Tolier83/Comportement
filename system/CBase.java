@@ -26,7 +26,7 @@ public class CBase extends CObject{
 		}
 	}
 	
-	public bougerAgents()
+	public void bougerAgents()
 	{	
 		for(int cpt = 0; cpt < this.nbAgents; cpt++)
 		{
@@ -34,13 +34,13 @@ public class CBase extends CObject{
 		}
 	}
 	
-	public afficherBase(Graphics pG)
+	public void afficherBase(Graphics pG)
 	{
 		pG.setColor(color);
 		pG.fillOval((int)this.posX, (int)this.posY, rayon, rayon);
 	}
 	
-	public afficherAgents(Graphics pG)
+	public void afficherAgents(Graphics pG)
 	{
 		pG.setColor(color);
 		for(int cpt = 0; cpt < this.nbAgents; cpt++)
