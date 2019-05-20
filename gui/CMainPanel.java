@@ -32,7 +32,7 @@ public class CMainPanel extends JPanel implements Observer {
 
     public CMainPanel() {
         // Fond noir.
-    	this.setBackground(new Color(0, 0, 0));
+    	this.setBackground(new Color(128, 128, 128));
     }
     
     public void launch() {
@@ -43,7 +43,11 @@ public class CMainPanel extends JPanel implements Observer {
 
     @Override
     public void update(Observable pObservable, Object pArg) {
-        this.repaint();
+    	for(CBase b : mEnv.mBaseList)
+        {
+        	b.bougerAgents();
+        }
+    	this.repaint();
     }
 
     @Override
@@ -54,6 +58,10 @@ public class CMainPanel extends JPanel implements Observer {
         {
         	b.afficherBase(pG);
         	b.afficherAgents(pG);
+        }
+        for(CNourriture n : mEnv.mNourritureList)
+        {
+        	n.afficher(pG);
         }
     }
 }

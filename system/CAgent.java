@@ -41,8 +41,8 @@ public class CAgent extends CObject {
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
 		
-		double lWidth = CEnvironement.getInstance().getWidth();
-		double lHeight = CEnvironement.getInstance().getHeight();
+		double lWidth = CEnvironement.getInstance().mWidth;
+		double lHeight = CEnvironement.getInstance().mHeight;
 		double minWidth = 0.0;
 		double minHeight = 0.0;
 		
@@ -82,10 +82,10 @@ public class CAgent extends CObject {
 	}
 	
     protected void updateDirection(List<CNourriture> pNourritureList) {
-        // Où aller ?
+       /* // Où aller ?
         List<CNourriture> lInZone = new ArrayList();
         lInZone.addAll(pNourritureList);
-        lInZone.removeIf(d -> (distance(d) > d.influenceZone()));
+        lInZone.removeIf(d -> (distance(d) > d.rayon));
         Collections.sort(lInZone, (CNourriture g1, CNourriture g2) -> (distance(g1) < distance(g2) ? -1: 1));
         CNourriture lGoal = null;
         if (!lInZone.isEmpty()) {
@@ -122,5 +122,6 @@ public class CAgent extends CObject {
             }
         }
         normalize();
-    }
+    }*/
+  	}
 }

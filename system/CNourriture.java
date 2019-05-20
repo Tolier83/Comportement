@@ -5,7 +5,7 @@ import java.awt.Graphics;
 public class CNourriture extends CObject {
 	public double rayon = 10;
 	Color color;
-	public int zoneSize = 1;
+	public int quantite = 10;
 	
 	
 	public CNourriture(double _x, double _y, Color _color, double _rayon) {
@@ -15,14 +15,17 @@ public class CNourriture extends CObject {
 		this.color = _color;
 	}
 
-	public void CreerZoneNourriture(Graphics pG) 
+	public void afficher(Graphics pG) 
 	{
 		pG.setColor(color);
-		pG.fillOval((int)this.posX, (int)this.posY, (int)rayon, (int)rayon);
+		pG.fillArc((int)this.posX, (int)this.posY, (int)this.rayon, (int)this.rayon, 0, 360);
+		pG.fillOval((int)this.posX, (int)this.posY, (int)quantite, (int)quantite);
+		
 	}
 	
-	public void DiminueNourriture()
+	public void decreaseSize()
 	{
-		zoneSize--;
+		if(quantite > 0)
+			quantite--;
 	}
 }
