@@ -2,12 +2,10 @@ package system;
 
 public class CZoneAEviter extends CObject {
 	public double rayon;
-	public double posX;
-	public double posY;
 	
 	public CZoneAEviter(double _x, double _y, double _rayon) {
-        posX = _x;
-        posY = _y;
+        this.posX = _x;
+        this.posY = _y;
         rayon = _rayon;
     }
 }
