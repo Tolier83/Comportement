@@ -88,9 +88,6 @@ public class CAgent extends CObject {
         lInZone.removeIf(d -> (distance(d) > d.influenceZone()));
         Collections.sort(lInZone, (CNourriture g1, CNourriture g2) -> (distance(g1) < distance(g2) ? -1: 1));
         CNourriture lGoal = null;
-        if (mLoading != null) {
-            lInZone.removeIf(d -> d.mType != mLoading.mType);
-        }
         if (!lInZone.isEmpty()) {
             lGoal = lInZone.get(0);
         }
