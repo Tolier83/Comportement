@@ -36,12 +36,48 @@ public class CAgent extends CObject {
 		return mBusy = true;
 	}
 
-	//public void updatePosition() {
-	//	posX += STEP * mSpeedX;
-	//	posY += STEP * mSpeedY;
+	public void updatePosition() {
+		posX += STEP * mSpeedX;
+		posY += STEP * mSpeedY;
 		
-	//	double lWidth = CEnvironement.getInstance().getWidth();
-	//	double lHeight = CEnvironement.getInstance().getHeight();
-	//	double minWidth = 0.0
-	//}
+		double lWidth = CEnvironement.getInstance().getWidth();
+		double lHeight = CEnvironement.getInstance().getHeight();
+		double minWidth = 0.0;
+		double minHeight = 0.0;
+		
+		if (posX < minWidth) {
+            posX = minWidth;
+        }
+        else if (posY < minHeight) {
+            posY = minHeight;
+        }
+        else if (posX > lWidth) {
+            posX = lWidth;
+        }
+        else if (posY > lHeight) {
+            posY = lHeight;
+        }
+		
+		 double min = Math.min(posX - minWidth, posY - minHeight);
+	        min = Math.min(min, lWidth - posX);
+	        min = Math.min(min, lHeight - posY);
+	        
+	        if (min < DISTANCE_MIN) {
+	        	if (min == (posX - minWidth)) {
+	        		mSpeedX += 0.3;
+	        	}
+	        	else if (min == (posY - minHeight)) { 
+	        		mSpeedY += 0.3; 
+	        	} 
+	        	else if (min == (lWidth - posX)) {
+	        		mSpeedX -= 0.3;
+	        	} 
+	        	else if (min == (lHeight - posY)) {
+	        		mSpeedY -= 0.3;
+	        	}   
+	    	}
+	        
+	        
+	        normalize();
+	}
 }
