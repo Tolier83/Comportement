@@ -44,13 +44,6 @@ public class CMainPanel extends JPanel implements Observer {
     @Override
     public void update(Observable pObservable, Object pArg) {
         this.repaint();
-        int lLoadedAgents = 0;
-        // Compter le nombre d'agents chargés et l'afficher dans la console.
-        int i = 0;
-        for (CBase p : mEnv.mBaseList) {
-        	++i;
-        }
-        System.out.println(i);
     }
 
     @Override
