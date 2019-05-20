@@ -123,5 +123,5 @@ public class CAgent extends CObject {
         }
         normalize();
     }*/
-  	}
+    }
 }
