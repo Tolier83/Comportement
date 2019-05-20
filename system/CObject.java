@@ -17,6 +17,4 @@ public class CObject {
     public double DistanceCarre(CObject o) {
         return (o.posX - posX) * (o.posX - posX) + (o.posY - posY) * (o.posY - posY);
     }
-	
-    // TODO CNAM : une dizaine de lignes de code à ajouter ici.
 }

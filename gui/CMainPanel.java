@@ -17,7 +17,7 @@ import java.util.TimerTask;
 public class CMainPanel extends JPanel implements Observer {
     private static final int BASE_COUNT = 3;
     private static final int AGENTS_COUNT = 30;
-
+    private static final int NOURRITURE_COUNT = 2;
    // private static final int AGENT_WIDTH = 3;
    // private static final int AGENT_HEIGHT = 3;
 
@@ -37,20 +37,13 @@ public class CMainPanel extends JPanel implements Observer {
     
     public void launch() {
         mEnv = CEnvironement.getInstance();
-        mEnv.init(BASE_COUNT, AGENTS_COUNT, getWidth(), getHeight());
+        mEnv.init(BASE_COUNT, AGENTS_COUNT, getWidth(), getHeight(),NOURRITURE_COUNT);
         mEnv.addObserver(this);
     }
 
     @Override
     public void update(Observable pObservable, Object pArg) {
         this.repaint();
-        int lLoadedAgents = 0;
-        // Compter le nombre d'agents chargés et l'afficher dans la console.
-        int i = 0;
-        for (CBase p : mEnv.mBaseList) {
-        	++i;
-        }
-        System.out.println(i);
     }
 
     @Override
