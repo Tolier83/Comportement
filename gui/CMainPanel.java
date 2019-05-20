@@ -7,15 +7,8 @@ import system.CNourriture;
 import system.CZoneAEviter;
 
 import javax.swing.*;
-
-import javax.swing.*;
 import java.awt.*;
-
 import java.awt.event.*;
-
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -93,13 +86,22 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
     {    	
     	if (SwingUtilities.isLeftMouseButton(e)) {
     		leftClickAction(e);
-    	} else {
+    	} 
+    	else if (SwingUtilities.isRightMouseButton(e))
+    	{
     		rightClickAction(e);
     	}
+    	else if(SwingUtilities.isMiddleMouseButton(e))
+    	{
+    		moletteClickAction(e);
+    	}
     }
-
+    
+	public void moletteClickAction(MouseEvent e)
+	{
+		mEnv.mNourritureList.add(new CNourriture(e.getX(), e.getY(), Color.BLACK, 2.0));
+	}
     public void leftClickAction(MouseEvent e)
-    {
     { 
     	System.out.println("ouai");
     	if(incrColor > 10)
@@ -112,7 +114,7 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
     }
 
     public void rightClickAction(MouseEvent e) {
-        mEnv.mZoneAEviterList.add(new CZoneAEviter(e.getX(), e.getY(), 4.0));
+       mEnv.mZoneAEviterList.add(new CZoneAEviter(e.getX(), e.getY(), 4.0));
     }
     
     @Override
