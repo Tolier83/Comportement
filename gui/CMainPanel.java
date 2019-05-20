@@ -52,7 +52,7 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
         int lLoadedAgents = 0;
         // Compter le nombre d'agents chargés et l'afficher dans la console.
         int i = 0;
-        for (CBase p : mEnv.mAgentsList) {
+        for (CBase p : mEnv.mBaseList) {
         	++i;
         }
         System.out.println(i);
@@ -64,11 +64,8 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
 
         for(CBase b : mEnv.mBaseList)
         {
-        	afficherBase(b, pG);
-        }
-        for(CBase b : mEnv.mAgentsList)
-        {
-        	afficherAgent(b, pG);
+        	b.afficherBase(pG);
+        	b.afficherAgents(pG);
         }
     }
     
