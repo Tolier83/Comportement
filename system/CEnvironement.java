@@ -28,27 +28,21 @@ public class CEnvironement extends Observable {
 		return sInstance;
 	}
     
-    public void init(int _nbBase, int _nbAgents, int x, int y) 
+    public void init(int _nbBase, int _nbAgents, int x, int y, int _nbNourriture) 
     {  	
     	mWidth = x;
     	mHeight = y;
     	mBaseList.clear();
     	for(int i = 0; i < _nbBase; i++)
     	{
-    		mBaseList.add(new CBase(x/10,y/10,_nbAgents,Color.RED,10));
+    		mBaseList.add(new CBase(x/10.0, y/10.0, _nbAgents, Color.RED, 10));
     	}
-    	
-    	
-    	
-    	
+    		
     	mNourritureList.clear();
-
-    	CBase lBase = ;
-    	CNourriture lNourriture = ;
-    	
-    	mBaseList.add(lBase);
-    	mNourritureList.add(lNourriture);
+    	for(int i = 0; i < _nbNourriture; i++)
+    	{
+    		mNourritureList.add(new CNourriture(x/5.0, y/5.0, 2.0));
+    	}
     }
-    
     
 }
