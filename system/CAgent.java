@@ -38,6 +38,8 @@ public class CAgent extends CObject {
 	}
 
 	public void updatePosition() {
+		mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+		mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
 		
