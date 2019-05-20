@@ -1,20 +1,21 @@
 package system;
 
+import java.awt.Color;
 import java.util.*;
 
 public class CEnvironement extends Observable {
 	private static CEnvironement sInstance = null;
     protected Random mRandomGen;
-    /*protected double mWidth;
-    protected double mHeight;*/
+    protected double mWidth;
+    protected double mHeight;
     public ArrayList<CBase> mBaseList;
     public ArrayList<CNourriture> mNourritureList;
     
     //protected int mIterCounts = 0;
 
     private CEnvironement() {
-    	mBaseList = new ArrayList();
-    	mNourritureList = new ArrayList();
+    	mBaseList = new ArrayList<CBase>();
+    	mNourritureList = new ArrayList<CNourriture>();
     
         // Création du générateur aléatoire.
         mRandomGen = new Random();
@@ -27,8 +28,19 @@ public class CEnvironement extends Observable {
 		return sInstance;
 	}
     
-    public void init() {
+    public void init(int _nbBase, int _nbAgents, int x, int y) 
+    {  	
+    	mWidth = x;
+    	mHeight = y;
     	mBaseList.clear();
+    	for(int i = 0; i < _nbBase; i++)
+    	{
+    		mBaseList.add(new CBase(x/10,y/10,_nbAgents,Color.RED,10));
+    	}
+    	
+    	
+    	
+    	
     	mNourritureList.clear();
 
     	CBase lBase = ;
@@ -37,4 +49,6 @@ public class CEnvironement extends Observable {
     	mBaseList.add(lBase);
     	mNourritureList.add(lNourriture);
     }
+    
+    
 }
