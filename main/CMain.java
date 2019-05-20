@@ -6,7 +6,7 @@ import gui.CMainPanel;
 
 public class CMain {
     public static final String TITLE = "TestComportementTest";
-    public static final int WIDTH = 1024;
+    public static final int WIDTH = 768;
     public static final int HEIGHT = 768;
 
 
