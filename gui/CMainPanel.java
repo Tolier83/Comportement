@@ -99,7 +99,9 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
     }
 
     public void leftClickAction(MouseEvent e)
-    {    	
+    {
+    { 
+    	System.out.println("ouai");
     	if(incrColor > 10)
     		incrColor=0;
     	else
