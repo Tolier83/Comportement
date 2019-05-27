@@ -10,7 +10,7 @@ import java.util.List;
 //Etat de combat -> recuperation de nourriture
 
 public class CAgent extends CObject {
-	protected final static double STEP = 5;
+	protected final static double STEP = 1;
 	protected final static double CHANGING_DIRECTION_PROB = 0.05;
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
@@ -41,8 +41,8 @@ public class CAgent extends CObject {
 	}
 	
 	protected void MiseAJourPosition() {
-		mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
-		mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+		mSpeedX += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+		mSpeedY += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
     }

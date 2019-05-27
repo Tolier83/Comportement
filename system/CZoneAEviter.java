@@ -16,7 +16,7 @@ public class CZoneAEviter extends CObject {
 	public void afficher(Graphics pG) 
 	{
 		pG.setColor(color);
-		pG.fillRect((int) this.posX, (int)this.posY, 10, 200);
+		pG.fillRect((int) this.posX, (int)this.posY, (int)rayon, (int)rayon);
 		
 	}
 }
