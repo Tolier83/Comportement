@@ -74,16 +74,18 @@ public class CBase extends CObject{
 			else {
 				pG.setColor(color);
 			}
+			this.fourmiz.get(cpt);
+			this.fourmiz.get(cpt);
 			pG.fillOval((int)this.fourmiz.get(cpt).posX,
 					(int)this.fourmiz.get(cpt).posY,
-					(int)this.fourmiz.get(cpt).SIZE,
-					(int)this.fourmiz.get(cpt).SIZE);
+					(int)CAgent.SIZE,
+					(int)CAgent.SIZE);
 		}
 	}
 	
 
 	/**
-	 * Retrait d'un agent s'il meurt
+	 * Réduction des pdv d'un agent et retrait d'un agent s'il meurt
 	 * @param agent
 	 * @param combat
 	 */

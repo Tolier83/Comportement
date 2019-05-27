@@ -164,7 +164,7 @@ public class CAgent extends CObject {
 	
     protected void updateDirection(List<CNourriture> pNourritureList) {
         // où aller ?
-        List<CNourriture> lInZone = new ArrayList();
+        List<CNourriture> lInZone = new ArrayList<CNourriture>();
         lInZone.addAll(pNourritureList);
         lInZone.removeIf(d -> (distance(d) > d.rayon));
         Collections.sort(lInZone, (CNourriture g1, CNourriture g2) -> (distance(g1) < distance(g2) ? -1: 1));
