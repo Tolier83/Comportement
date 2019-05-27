@@ -146,14 +146,15 @@ public class CAgent extends CObject {
         normalize();
     }
     
-    public void meh(Graphics pG) {
+    public void drawPheromones(Graphics pG) {
     		
     	if(pheromones.size() > 0) {
     		for (int i = 0; i < pheromones.size(); i++) {
-            	int alpha = 5;
-            	Color myColour = new Color(255, 0, 0, alpha);
+            	int alpha = 10;
+            	Color myColour = new Color(255, 0, 0, pheromones.get(i).PHEROMONE_ALPHA);
             	pG.setColor(myColour);
-        		pG.fillOval(pheromones.get(i).getPosX(), pheromones.get(i).getPosY(), 5, 5);
+        		pG.fillOval(pheromones.get(i).getPosX(), pheromones.get(i).getPosY(), pheromones.get(i).PHEROMONE_HEIGHT, pheromones.get(i).PHEROMONE_WIDTH
+        				);
 			}
     		
 
