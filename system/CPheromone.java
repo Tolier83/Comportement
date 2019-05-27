@@ -1,17 +1,24 @@
 package system;
 
 
-public class CPheromone {
+public class CPheromone extends CObject {
 	
 	private int posX;
 	private int posY;
 	public final int PHEROMONE_HEIGHT = 5; 
 	public final int PHEROMONE_WIDTH = 5;
-	public int PHEROMONE_ALPHA = 1;
+	private int transparence = 1;
 	
 	public CPheromone(int x, int y) {
 		this.posX = x;
 		this.posY = y;
+		this.transparence = 1;
+	}
+	
+	public CPheromone(int x, int y, int transparence) {
+		this.posX = x;
+		this.posY = y;
+		this.transparence = transparence;
 	}
 	
 	public int getPosX() {
@@ -19,6 +26,10 @@ public class CPheromone {
 	}
 	public int getPosY() {
 		return this.posY;
+	}
+	
+	public int getTransparence() {
+		return this.transparence;
 	}
 
 }

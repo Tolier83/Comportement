@@ -30,6 +30,8 @@ public class CAgent extends CObject {
 	public static final int maxCombat = 5;
 	public static final int minCombat = 0;	
 	public boolean mBusy = false;
+	private int saveAlpha = 1;
+	private int saveIndexPhero;
 	
 	protected void normalize() {
 		double lLenght = Math.sqrt(mSpeedX * mSpeedX + mSpeedY * mSpeedY);
@@ -49,10 +51,12 @@ public class CAgent extends CObject {
 	}
 	
 	public boolean isLoaded() {
+		saveIndexPhero = pheromones.size()-1;
 		return mBusy = true;
 	}
 	
 	public boolean unLoad() {
+		saveIndexPhero = 0;
 		return mBusy = false;
 	}
 	
@@ -61,11 +65,27 @@ public class CAgent extends CObject {
              mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
              mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
          }
+		 if(mBusy) {
+			 CPheromone unePheromone = pheromones.get(saveIndexPhero);
+			 double distanceCarre = DistanceCarre(unePheromone);
+			 double distance = Math.sqrt(distanceCarre);
+             double diffX = (unePheromone.getPosX() - posX) / distance;
+             double diffY = (unePheromone.getPosY() - posY) / distance;
+             mSpeedX = diffX / 2;
+             mSpeedY = diffY / 2;
+             normalize();
+             saveIndexPhero = (saveIndexPhero - 1 >= 0)?saveIndexPhero - 1 : 0;
+		 }
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
-		if(indexPheromones == 10) {
+		if(indexPheromones == 2) {
 			indexPheromones = 0;
-			this.pheromones.add(new CPheromone((int)posX, (int)posY));
+			if(mBusy) {
+				this.pheromones.add(new CPheromone((int)posX, (int)posY, saveAlpha));
+				saveAlpha = (saveAlpha - 1 > 1)?saveAlpha - 1:1;
+			}else {
+				this.pheromones.add(new CPheromone((int)posX, (int)posY));
+			}
 		}
 		indexPheromones ++;
 
@@ -129,7 +149,7 @@ public class CAgent extends CObject {
 	}
 	
     protected void updateDirection(List<CNourriture> pNourritureList) {
-        // Où aller ?
+        // OÃ¹ aller ?
         List<CNourriture> lInZone = new ArrayList();
         lInZone.addAll(pNourritureList);
         lInZone.removeIf(d -> (distance(d) > d.rayon));
@@ -174,11 +194,11 @@ public class CAgent extends CObject {
     		
     	if(pheromones.size() > 0 ) {
     		for (int i = 0; i < pheromones.size(); i++) {
-    			if(pheromones.get(i).PHEROMONE_ALPHA > 30) {
+    			if(pheromones.get(i).getTransparence() > 30) {
     				Color myColour = new Color(baseColor.getRed(),
     						baseColor.getGreen(),
     						baseColor.getBlue(),
-    						pheromones.get(i).PHEROMONE_ALPHA);
+    						pheromones.get(i).getTransparence());
     				pG.setColor(myColour);
     				pG.fillOval(pheromones.get(i).getPosX(),
     						pheromones.get(i).getPosY(),
@@ -229,6 +249,7 @@ public class CAgent extends CObject {
 				if ((this.posX >= (mNourriture.getPosX() - mRayon) && (this.posX) <= (mNourriture.getPosX() + mRayon)) && ((this.posY >= (mNourriture.getPosY() - mRayon)) && (this.posY <= (mNourriture.getPosY() + mRayon)))) {
 					mNourriture.decreaseSize();
 					this.isLoaded();
+					saveAlpha = 80;
 					return true;
 				}
 			}
@@ -242,7 +263,7 @@ public class CAgent extends CObject {
     			double mRayon = mBase.getRayon();
 				if ((this.posX >= (mBase.getPosX() - mRayon) && (this.posX) <= (mBase.getPosX() + mRayon)) && ((this.posY >= (mBase.getPosY() - mRayon)) && (this.posY <= (mBase.getPosY() + mRayon)))) {
 					if (this.mBusy == true) {
-						//System.out.println("j'ai pos� la p�hce");
+						//System.out.println("j'ai posé la pêhce");
 						this.mBusy = false;
 					}
 					this.Energizer = 100;
