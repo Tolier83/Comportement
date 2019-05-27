@@ -49,7 +49,7 @@ public class CEnvironement extends Observable {
     	mNourritureList.clear();
     	for(int i = 0; i < _nbNourriture; i++)
     	{
-    		mNourritureList.add(new CNourriture(x/2.0, y/2.0, Color.BLACK, 2.0));
+    		mNourritureList.add(new CNourriture(x/2.0, y/2.0, Color.BLACK, 20));
     	}
     	mZoneAEviterList.clear();
     }

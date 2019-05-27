@@ -3,9 +3,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class CNourriture extends CObject {
-	public double rayon = 100;
+	public double rayon = 20;
 	Color color;
-	public int quantite = 10;
+	public int quantite = 20;
 	
 	
 	public CNourriture(double _x, double _y, Color _color, double _rayon) {

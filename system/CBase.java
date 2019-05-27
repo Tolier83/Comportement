@@ -9,7 +9,7 @@ public class CBase extends CObject{
 	public int rayon = 10;
 	public int nbAgents = 0;
 	public ArrayList<CAgent> fourmiz;
-	Color color;
+	private Color color;
 	
 	public CBase(double _x, double _y, int _nbAgents, Color _color, int _rayon)
 	{
@@ -24,6 +24,10 @@ public class CBase extends CObject{
 		{
 			this.fourmiz.add(new CAgent(this.posX, this.posY));
 		}
+	}
+	
+	public Color getColor() {
+		return this.color;
 	}
 	
 	public void bougerAgents()
@@ -42,13 +46,16 @@ public class CBase extends CObject{
 	
 	public void afficherAgents(Graphics pG)
 	{
+		
+		
 		for(int cpt = 0; cpt < this.nbAgents; cpt++)
 		{
-			if(this.fourmiz.get(cpt).mBusy)
-				pG.setColor(Color.YELLOW);
-			else
+			if(this.fourmiz.get(cpt).Energizer <= 0) {
+				pG.setColor(Color.BLACK);
+				this.fourmiz.get(cpt).backToHome();			}
+			else {
 				pG.setColor(color);
-			
+			}
 			pG.fillOval((int)this.fourmiz.get(cpt).posX,
 					(int)this.fourmiz.get(cpt).posY,
 					(int)this.fourmiz.get(cpt).SIZE,
@@ -63,6 +70,18 @@ public class CBase extends CObject{
 		if(agent.PointdeVie <= 0) {
 			this.fourmiz.remove(agent);
 		}
+	}
+
+	public double getRayon() {
+		return this.rayon;
+	}
+
+	public double getPosX() {
+		return this.posX;
+	}
+	
+	public double getPosY() {
+		return this.posY;
 	}
 	
 }
