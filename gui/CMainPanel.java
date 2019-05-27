@@ -23,6 +23,7 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
    // private static final int AGENT_WIDTH = 3;
    // private static final int AGENT_HEIGHT = 3;
 
+   
     private static final int TIMER_DELAY = 0;
     private static final int TIMER_PERIOD = 10;
     int incrColor =0;
@@ -69,11 +70,10 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
         {
         	b.afficherBase(pG);
         	b.afficherAgents(pG);
-        	for (CAgent agent : b.fourmiz) {
-        		//agent.meh(pG);
-				
-			}
         	
+        	for (CAgent agent : b.fourmiz) {
+        		agent.drawPheromones(pG, b.getColor());
+			}
         }
         for(CNourriture n : mEnv.mNourritureList)
         {

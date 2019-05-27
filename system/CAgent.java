@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jdk.nashorn.internal.runtime.Undefined;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -16,17 +18,18 @@ public class CAgent extends CObject {
 	protected final static double CHANGING_DIRECTION_PROB = 0.05;
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
+	private int indexPheromones = 0;
 	
 	
 	protected CNourriture mLoading;
 	protected double mSpeedX;
 	protected double mSpeedY;
+	public List<CPheromone> pheromones;
 	
 	protected int mCombat;
 	public int PointdeVie;
 	public static final int maxCombat = 5;
-	public static final int minCombat = 0;
-	
+	public static final int minCombat = 0;	
 	public boolean mBusy = false;
 	
 	protected void normalize() {
@@ -36,8 +39,10 @@ public class CAgent extends CObject {
 	}
 	
 	public CAgent(double pPosX, double pPosY) {
+		this.pheromones = new ArrayList<CPheromone>();
 		posX = pPosX;
 		posY = pPosY;
+		this.pheromones.add(new CPheromone((int)posX, (int)posY));
 		
 		mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
@@ -59,8 +64,15 @@ public class CAgent extends CObject {
          }
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
+		if(indexPheromones == 10) {
+			indexPheromones = 0;
+			this.pheromones.add(new CPheromone((int)posX, (int)posY));
+		}
+		indexPheromones ++;
+
     }
 
+	
 	public boolean EviterMurs() {
 		
 		double lWidth = CEnvironement.getInstance().mWidth;
@@ -146,11 +158,29 @@ public class CAgent extends CObject {
         normalize();
     }
     
-    public void meh(Graphics pG) {
-    	int alpha = 127; // 50% transparent
-    	Color myColour = new Color(255, 0, 0, alpha);
-    	pG.setColor(myColour);
-		pG.fillOval((int)this.posX, (int)this.posY, 30, 30);
+    public void drawPheromones(Graphics pG, Color baseColor) {
+    		
+    	if(pheromones.size() > 0 ) {
+    		for (int i = 0; i < pheromones.size(); i++) {
+    			if(pheromones.get(i).PHEROMONE_ALPHA > 30) {
+    				Color myColour = new Color(baseColor.getRed(),
+    						baseColor.getGreen(),
+    						baseColor.getBlue(),
+    						pheromones.get(i).PHEROMONE_ALPHA);
+    				pG.setColor(myColour);
+    				pG.fillOval(pheromones.get(i).getPosX(),
+    						pheromones.get(i).getPosY(),
+    						pheromones.get(i).PHEROMONE_HEIGHT,
+    						pheromones.get(i).PHEROMONE_WIDTH
+        				);
+    			}
+
+			}
+    		
+
+    	}
+
+		
     }
     
     protected boolean EviterObstacles() {
