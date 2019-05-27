@@ -85,7 +85,6 @@ public class CAgent extends CObject {
 			}
 		}
 		indexPheromones++;
-
 	}
 	
 	public void backToHome() {
@@ -109,9 +108,6 @@ public class CAgent extends CObject {
 				double n = (double) (Math.random() * 3);
 				this.Energizer = this.Energizer - n;
 			}
-
-			// else
-			// returnHome();
 		}
 		index++;
 	}
@@ -211,65 +207,9 @@ public class CAgent extends CObject {
     						pheromones.get(i).PHEROMONE_WIDTH
         				);
     			}
-
-	protected void updateDirection(List<CNourriture> pNourritureList) {
-		// OÃ¹ aller ?
-		List<CNourriture> lInZone = new ArrayList();
-		lInZone.addAll(pNourritureList);
-		lInZone.removeIf(d -> (distance(d) > d.rayon));
-		Collections.sort(lInZone, (CNourriture g1, CNourriture g2) -> (distance(g1) < distance(g2) ? -1 : 1));
-		CNourriture lGoal = null;
-		if (!lInZone.isEmpty()) {
-			lGoal = lInZone.get(0);
-		}
-
-		// Avons-nous un but ?
-		if (lGoal == null || mBusy) {
-			if (CEnvironement.getInstance().mRandomGen.nextDouble() < CHANGING_DIRECTION_PROB) {
-				mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
-				mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
-			}
-			if (mBusy && lGoal == null) {
-				mBusy = false;
-			}
-		} else {
-			// Aller au but
-			mSpeedX = lGoal.posX - posX;
-			mSpeedY = lGoal.posY - posY;
-			// But atteint ?
-			if (distance(lGoal) < STEP) {
-				if (mLoading == null) {
-					// if (CEnvironement.getInstance().mRandomGen.nextDouble() <
-					// lGoal.catchingProbability()) {
-					mLoading = CEnvironement.getInstance().catchNourriture(lGoal);
-					// }
-				} else {
-					// SCEnvironement.getInstance().putDownNourriture(lGoal);
-					mLoading = null;
-				}
-				mBusy = Boolean.TRUE;
-			}
-		}
-		normalize();
-	}
-
-	public void drawPheromones(Graphics pG, Color baseColor) {
-
-		if (pheromones.size() > 0) {
-			for (int i = 0; i < pheromones.size(); i++) {
-				if (pheromones.get(i).getTransparence() > 30) {
-					Color myColour = new Color(baseColor.getRed(), baseColor.getGreen(), baseColor.getBlue(),
-							pheromones.get(i).getTransparence());
-					pG.setColor(myColour);
-					pG.fillOval(pheromones.get(i).getPosX(), pheromones.get(i).getPosY(),
-							pheromones.get(i).PHEROMONE_HEIGHT, pheromones.get(i).PHEROMONE_WIDTH);
-				}
-
-			}
-
-		}
-
-	}
+    		}
+    	}
+    }
 
 	protected boolean EviterObstacles() {
 		ArrayList<CZoneAEviter> obstacles = CEnvironement.getInstance().mZoneAEviterList;
@@ -304,7 +244,7 @@ public class CAgent extends CObject {
 				double mRayon = mNourriture.getRayon();
 				if ((this.posX >= (mNourriture.getPosX() - mRayon) && (this.posX) <= (mNourriture.getPosX() + mRayon))
 						&& ((this.posY >= (mNourriture.getPosY() - mRayon))
-								&& (this.posY <= (mNourriture.getPosY() + mRayon)))) {
+								&& (this.posY <= (mNourriture.getPosY() + mRayon))) && mNourriture.quantite > 0) {
 					mNourriture.decreaseSize();
 					this.isLoaded();
 					saveAlpha = 80;

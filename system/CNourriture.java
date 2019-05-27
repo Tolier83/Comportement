@@ -29,9 +29,7 @@ public class CNourriture extends CObject {
 			quantite--;
 			rayon--;
 		}
-		else {
-			System.out.println("plus de nourriture");
-		}
+		
 	}
 	
 	public double getPosX() {
