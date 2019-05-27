@@ -19,6 +19,11 @@ public class CAgent extends CObject {
 	protected double mSpeedX;
 	protected double mSpeedY;
 	
+	protected int mCombat;
+
+	public static final int maxCombat = 5;
+	public static final int minCombat = 0;
+	
 	public boolean mBusy = false;
 	
 	protected void normalize() {
@@ -165,4 +170,10 @@ public class CAgent extends CObject {
     	EviterMurs();
         MiseAJourPosition();
     }
+    
+    protected void combat() { 
+		mCombat = (int) (Math.random() * ( maxCombat - minCombat ));
+	}
+
+    
 }

@@ -52,4 +52,9 @@ public class CBase extends CObject{
 		}
 	}
 	
+
+	public void killAgents(CAgent agent) {
+		this.fourmiz.remove(agent);
+	}
+	
 }
