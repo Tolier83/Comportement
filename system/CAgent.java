@@ -77,11 +77,11 @@ public class CAgent extends CObject {
 		posY += STEP * mSpeedY;
 		if (indexPheromones == 2) {
 			indexPheromones = 0;
-			if (mBusy) {
-				this.pheromones.add(new CPheromone((int) posX, (int) posY, saveAlpha));
-				saveAlpha = (saveAlpha - 1 > 1) ? saveAlpha - 1 : 1;
-			} else {
-				this.pheromones.add(new CPheromone((int) posX, (int) posY));
+			if(mBusy) {
+				this.pheromones.add(new CPheromone((int)posX, (int)posY, saveAlpha));
+				saveAlpha = (saveAlpha - 1 >= 20)?saveAlpha - 1:20;
+			}else {
+				this.pheromones.add(new CPheromone((int)posX, (int)posY));
 			}
 		}
 		indexPheromones++;
@@ -152,6 +152,65 @@ public class CAgent extends CObject {
 		}
 		return false;
 	}
+	
+    protected void updateDirection(List<CNourriture> pNourritureList) {
+        // OÃ¹ aller ?
+        List<CNourriture> lInZone = new ArrayList();
+        lInZone.addAll(pNourritureList);
+        lInZone.removeIf(d -> (distance(d) > d.rayon));
+        Collections.sort(lInZone, (CNourriture g1, CNourriture g2) -> (distance(g1) < distance(g2) ? -1: 1));
+        CNourriture lGoal = null;
+        if (!lInZone.isEmpty()) {
+            lGoal = lInZone.get(0);
+        }
+
+        // Avons-nous un but ?
+        if (lGoal == null || mBusy) {
+            if (CEnvironement.getInstance().mRandomGen.nextDouble() < CHANGING_DIRECTION_PROB) {
+                mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+                mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+            }
+            if (mBusy && lGoal == null) {
+                mBusy = false;
+            }
+        }
+        else {
+            // Aller au but
+            mSpeedX = lGoal.posX - posX;
+            mSpeedY = lGoal.posY - posY;
+            // But atteint ?
+            if (distance(lGoal) < STEP) {
+                if (mLoading == null) {
+                    //if (CEnvironement.getInstance().mRandomGen.nextDouble() < lGoal.catchingProbability()) {
+                        mLoading = CEnvironement.getInstance().catchNourriture(lGoal);
+                    //}
+                }
+                else {
+                    //SCEnvironement.getInstance().putDownNourriture(lGoal);
+                    mLoading = null;
+                }
+                mBusy = Boolean.TRUE;
+            }
+        }
+        normalize();
+    }
+    
+    public void drawPheromones(Graphics pG, Color baseColor) {
+    		
+    	if(pheromones.size() > 0 ) {
+    		for (int i = 0; i < pheromones.size(); i++) {
+    			if(pheromones.get(i).getTransparence() > 15) {
+    				Color myColour = new Color(baseColor.getRed(),
+    						baseColor.getGreen(),
+    						baseColor.getBlue(),
+    						pheromones.get(i).getTransparence());
+    				pG.setColor(myColour);
+    				pG.fillOval(pheromones.get(i).getPosX(),
+    						pheromones.get(i).getPosY(),
+    						pheromones.get(i).PHEROMONE_HEIGHT,
+    						pheromones.get(i).PHEROMONE_WIDTH
+        				);
+    			}
 
 	protected void updateDirection(List<CNourriture> pNourritureList) {
 		// OÃ¹ aller ?
