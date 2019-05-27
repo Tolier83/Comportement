@@ -277,7 +277,7 @@ public class CAgent extends CObject {
 	}
 
 	/**
-	 * 
+	 * permet de voir si un agent est bloque en fonction des époques 
 	 */
     public void statusEpoque() {
     	getEpoque();
