@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java.awt.Color;
+import java.awt.Graphics;
 
 
 
 //Etat de combat -> recuperation de nourriture
 
 public class CAgent extends CObject {
-	protected final static double STEP = 5;
+	protected final static double STEP = 1;
 	protected final static double CHANGING_DIRECTION_PROB = 0.05;
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
@@ -45,9 +47,13 @@ public class CAgent extends CObject {
 		return mBusy = true;
 	}
 	
+	public boolean unLoad() {
+		return mBusy = false;
+	}
+	
 	protected void MiseAJourPosition() {
-		mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
-		mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+		mSpeedX += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+		mSpeedY += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
     }
@@ -138,6 +144,13 @@ public class CAgent extends CObject {
         normalize();
     }
     
+    public void meh(Graphics pG) {
+    	int alpha = 127; // 50% transparent
+    	Color myColour = new Color(255, 0, 0, alpha);
+    	pG.setColor(myColour);
+		pG.fillOval((int)this.posX, (int)this.posY, 30, 30);
+    }
+    
     protected boolean EviterObstacles() {
     	ArrayList<CZoneAEviter> obstacles = CEnvironement.getInstance().mZoneAEviterList;
         if (!obstacles.isEmpty()) {
@@ -165,9 +178,26 @@ public class CAgent extends CObject {
         return false;        
     }
     
+    public boolean nourritureFind() {
+		boolean finded = false;
+		if (this.mBusy == false) {
+			for (CNourriture mNourriture : CEnvironement.getInstance().mNourritureList) {
+				double mRayon = mNourriture.getRayon();
+				if ((this.posX >= (mNourriture.getPosX() - mRayon) && (this.posX) <= (mNourriture.getPosX() + mRayon)) && ((this.posY >= (mNourriture.getPosY() - mRayon)) && (this.posY <= (mNourriture.getPosY() + mRayon)))) {
+					mNourriture.decreaseSize();
+					this.isLoaded();
+					System.out.println("j'ai trouvé de la nourriture kalash est chargé");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+    
     protected void MiseAJour() {
     	EviterObstacles();
     	EviterMurs();
+    	nourritureFind();
         MiseAJourPosition();
     }
     
