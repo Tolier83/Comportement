@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
-
 public class CBase extends CObject{
 	
 	public int rayon = 10;
@@ -11,6 +10,14 @@ public class CBase extends CObject{
 	public ArrayList<CAgent> fourmiz;
 	private Color color;
 	
+	/**
+	 * 
+	 * @param _x
+	 * @param _y
+	 * @param _nbAgents
+	 * @param _color
+	 * @param _rayon
+	 */
 	public CBase(double _x, double _y, int _nbAgents, Color _color, int _rayon)
 	{
 		this.posX = _x;
@@ -26,10 +33,13 @@ public class CBase extends CObject{
 		}
 	}
 	
+	
 	public Color getColor() {
 		return this.color;
 	}
-	
+	/**
+	 * 
+	 */
 	public void bougerAgents()
 	{	
 		for(int cpt = 0; cpt < this.nbAgents; cpt++)
@@ -38,12 +48,20 @@ public class CBase extends CObject{
 		}
 	}
 	
+	/**
+	 * Dessine le canas de base
+	 * @param pG
+	 */
 	public void afficherBase(Graphics pG)
 	{
 		pG.setColor(color);
 		pG.fillOval((int)this.posX, (int)this.posY, rayon, rayon);
 	}
 	
+	/**
+	 * Dessine les différents agents sur le canvas
+	 * @param pG Canvas instancié
+	 */
 	public void afficherAgents(Graphics pG)
 	{
 		
@@ -56,14 +74,21 @@ public class CBase extends CObject{
 			else {
 				pG.setColor(color);
 			}
+			this.fourmiz.get(cpt);
+			this.fourmiz.get(cpt);
 			pG.fillOval((int)this.fourmiz.get(cpt).posX,
 					(int)this.fourmiz.get(cpt).posY,
-					(int)this.fourmiz.get(cpt).SIZE,
-					(int)this.fourmiz.get(cpt).SIZE);
+					(int)CAgent.SIZE,
+					(int)CAgent.SIZE);
 		}
 	}
 	
 
+	/**
+	 * Réduction des pdv d'un agent et retrait d'un agent s'il meurt
+	 * @param agent
+	 * @param combat
+	 */
 	public void killAgents(CAgent agent, int combat) {
 		// enleve un agent si il meurt, en fonction des point de vie 
 		agent.PointdeVie = agent.PointdeVie-combat;

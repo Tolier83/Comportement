@@ -7,12 +7,22 @@ public class CZoneAEviter extends CObject {
 	public double rayon;
 	Color color;
 	
+	/**
+	 * 
+	 * @param _x
+	 * @param _y
+	 * @param _rayon
+	 */
 	public CZoneAEviter(double _x, double _y, double _rayon) {
         this.posX = _x;
         this.posY = _y;
         rayon = _rayon;
     }
 	
+	/**
+	 * Déssine l'obstacle sur le canvas
+	 * @param pG
+	 */
 	public void afficher(Graphics pG) 
 	{
 
