@@ -17,6 +17,7 @@ public class CAgent extends CObject {
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
 	
+	
 	protected CNourriture mLoading;
 	protected double mSpeedX;
 	protected double mSpeedY;
@@ -179,14 +180,12 @@ public class CAgent extends CObject {
     }
     
     public boolean nourritureFind() {
-		boolean finded = false;
 		if (this.mBusy == false) {
 			for (CNourriture mNourriture : CEnvironement.getInstance().mNourritureList) {
 				double mRayon = mNourriture.getRayon();
 				if ((this.posX >= (mNourriture.getPosX() - mRayon) && (this.posX) <= (mNourriture.getPosX() + mRayon)) && ((this.posY >= (mNourriture.getPosY() - mRayon)) && (this.posY <= (mNourriture.getPosY() + mRayon)))) {
 					mNourriture.decreaseSize();
 					this.isLoaded();
-					System.out.println("j'ai trouvé de la nourriture kalash est chargé");
 					return true;
 				}
 			}
@@ -194,10 +193,24 @@ public class CAgent extends CObject {
 		return false;
 	}
     
+    public boolean hitHome() {
+    	if (this.mBusy == true) {
+    		for (CBase mBase : CEnvironement.getInstance().mBaseList) {
+    			double mRayon = mBase.getRayon();
+    			if ((this.posX >= (mBase.getPosX() - mRayon) && (this.posX) <= (mBase.getPosX() + mRayon)) && ((this.posY >= (mBase.getPosY() - mRayon)) && (this.posY <= (mBase.getPosY() + mRayon)))) {
+					System.out.println("j'ai posé la pêhce");
+					return true;
+				}
+    		}
+    	}
+		return false;
+    }
+    
     protected void MiseAJour() {
     	EviterObstacles();
     	EviterMurs();
     	nourritureFind();
+    	hitHome();
         MiseAJourPosition();
     }
     
