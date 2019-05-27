@@ -41,6 +41,6 @@ class CommandesServ implements Runnable
         System.out.flush();
       }
     }
-    catch (IOException e) {}
+    catch (IOException e) {System.out.println(e);}
   }
 }

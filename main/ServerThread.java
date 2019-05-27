@@ -32,25 +32,34 @@ class ServerThread implements Runnable
   public void run()
   {
     String message = ""; 
+    //String message1 = ""; 
   
     System.out.println("Un nouveau client s'est connecte, no "+m_numClient);
     try
     {
+    	
       char charCur[] = new char[1]; 
+      //message1= m_in.readLine();
+      
       while(m_in.read(charCur, 0, 1)!=-1) 
       {
-      	
+    	  
         if (charCur[0] != '\u0000' && charCur[0] != '\n' && charCur[0] != '\r') // "\u0000 " == null
                 message += charCur[0];
-        else if(!message.equalsIgnoreCase("")) 
+        else //if(!message.equalsIgnoreCase("")) 
         {
-          if(charCur[0]=='\u0000') 
-          
+        	System.out.println(charCur[0]);
+          if(charCur[0]=='\u0000'&& charCur[0] == '\n' && charCur[0] == '\r')
         	  m_CServer2.sendAll(message,""+charCur[0]);
-          else m_CServer2.sendAll(message,""); 
+          else 
+        	  m_CServer2.sendAll(message,""); 
+          
           message = ""; 
         }
+        
+        System.out.println(message);
       }
+      //System.out.println(message);
     }
     catch (Exception e){ }
     finally //deconnexion du client

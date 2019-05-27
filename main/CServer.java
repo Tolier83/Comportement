@@ -4,22 +4,23 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Vector; 
 
 public class CServer
 { 
 
 	private int m_nbClient =0 ; //nb Client Connecter
-	private Vector m_TabClient = new Vector(); //TabClient
+	public ArrayList<PrintWriter> m_TabClient; //TabClient
+	public int clientDelete = 0;
 	
 	public static void main(String args[]) 
 	{ 
 		CServer server = new CServer();
-		
+		server.m_TabClient = new ArrayList<PrintWriter>();
 		try
 		{
 			Integer port = 40000;
-			
 			new CommandesServ(server);
 			ServerSocket ss = null;
 			try
@@ -49,10 +50,11 @@ public class CServer
 	
 	synchronized public void sendAll(String message,String sLast)
 	{
+		System.out.println("sendall");
 		PrintWriter out;
 		for(int i = 0; i<m_TabClient.size();i++)
 		{
-			out = (PrintWriter) m_TabClient.elementAt(i);
+			out = m_TabClient.get(i);
 			if(out != null)
 			{
 				out.print(message + sLast);
@@ -65,16 +67,19 @@ public class CServer
 	  synchronized public void delClient(int i)
 	  {
 		  m_nbClient--; // del client
-	    if (m_TabClient.elementAt(i) != null) 
+		  clientDelete++;
+		  
+		  System.out.println(i);
+	    if (m_TabClient.get(i) != null) 
 	    {
-	    	m_TabClient.removeElementAt(i);
+	    	m_TabClient.remove(i);
 	    }
 	  }
 
 	  synchronized public int addClient(PrintWriter out)
 	  {
 		  m_nbClient++; 
-		  m_TabClient.addElement(out); 
+		  m_TabClient.add(out); 
 	    return m_TabClient.size()-1; // on retourne le numéro du client ajouté (size-1)
 	  }
 
@@ -82,5 +87,4 @@ public class CServer
 	  {
 	    return m_nbClient; // retourne le nombre de clients connectés
 	  }
-	
 } 
