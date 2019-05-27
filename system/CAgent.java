@@ -22,7 +22,7 @@ public class CAgent extends CObject {
 	protected double mSpeedY;
 	
 	protected int mCombat;
-
+	public int PointdeVie;
 	public static final int maxCombat = 5;
 	public static final int minCombat = 0;
 	
@@ -181,6 +181,8 @@ public class CAgent extends CObject {
     }
     
     protected void combat() { 
+    	// attaque et point de vie d'un agent
+    	PointdeVie = 10;
 		mCombat = (int) (Math.random() * ( maxCombat - minCombat ));
 	}
 

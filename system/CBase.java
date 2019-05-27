@@ -53,8 +53,12 @@ public class CBase extends CObject{
 	}
 	
 
-	public void killAgents(CAgent agent) {
-		this.fourmiz.remove(agent);
+	public void killAgents(CAgent agent, int combat) {
+		// enleve un agent si il meurt, en fonction des point de vie 
+		agent.PointdeVie = agent.PointdeVie-combat;
+		if(agent.PointdeVie <= 0) {
+			this.fourmiz.remove(agent);
+		}
 	}
 	
 }
