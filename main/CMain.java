@@ -29,6 +29,6 @@ public class CMain {
 
         // Lancement processus.
     	panel.launch();
-    	CClient client = new CClient("localhost", 40000);
+    	CClient client = new CClient("localhost", 41000);
     }
 }
