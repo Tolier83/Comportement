@@ -16,6 +16,8 @@ public class CAgent extends CObject {
 	protected final static double CHANGING_DIRECTION_PROB = 0.05;
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
+	public static final int RAYON_EPOQUE = 2;
+	public static int SIZE_EPOQUE = 9;
 	
 	protected CNourriture mLoading;
 	protected double mSpeedX;
@@ -25,6 +27,8 @@ public class CAgent extends CObject {
 	public int PointdeVie;
 	public static final int maxCombat = 5;
 	public static final int minCombat = 0;
+	
+	public ArrayList<double[]> epoque; 
 	
 	public boolean mBusy = false;
 	
@@ -37,7 +41,7 @@ public class CAgent extends CObject {
 	public CAgent(double pPosX, double pPosY) {
 		posX = pPosX;
 		posY = pPosY;
-		
+		epoque = new ArrayList<double[]>();
 		mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		normalize();
@@ -58,6 +62,7 @@ public class CAgent extends CObject {
          }
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
+		
     }
 
 	public boolean EviterMurs() {
@@ -200,6 +205,7 @@ public class CAgent extends CObject {
     	EviterMurs();
     	nourritureFind();
         MiseAJourPosition();
+        //statusEpoque();
     }
     
     protected void combat() { 
@@ -207,6 +213,40 @@ public class CAgent extends CObject {
     	PointdeVie = 10;
 		mCombat = (int) (Math.random() * ( maxCombat - minCombat ));
 	}
-
+    
+    public void statusEpoque() {
+    	getEpoque();
+    	boolean bloque = false;
+    	if(epoque.size() == 4) {
+    		double[] positionCercle = epoque.get(SIZE_EPOQUE-1);
+    		for (double[] eq: epoque) {
+    			if ( Math.sqrt((eq[0]-positionCercle[0])*(eq[0]-positionCercle[0])+(positionCercle[1] - eq[1])*(positionCercle[1] - eq[1])) < RAYON_EPOQUE) {
+    				bloque = true;
+    			} else {
+    				bloque = false;
+    			}
+    		}	
+    		if(bloque) {
+        		ArrayList<CZoneAEviter> obstacles = CEnvironement.getInstance().mZoneAEviterList;
+        		this.posX = positionCercle[0] - epoque.get(3)[0];
+        		this.posX = positionCercle[1] - epoque.get(3)[1];
+        		for (CZoneAEviter ob : obstacles) {
+        			while((posX == ob.posX)&&(posY==ob.posY)) {
+        				this.posX=this.posX/2;
+        				this.posY=this.posY/2;
+        			}
+        		}
+        	}
+    	}
+    }
+    
+    public void getEpoque() {
+    	double[] posCurrent = {posX,posY};
+		epoque.add(posCurrent);
+		if(epoque.size() == SIZE_EPOQUE+1) {
+			epoque.remove(SIZE_EPOQUE);
+		};
+    }
+    
     
 }
