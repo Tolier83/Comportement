@@ -10,6 +10,10 @@ public class CMain {
     public static final int HEIGHT = 768;
 
 
+    /**
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
     	JFrame fenetre = new JFrame();
     	fenetre.setTitle(TITLE);
@@ -18,7 +22,7 @@ public class CMain {
     	fenetre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	fenetre.setResizable(false);
 
-        // CrÃ©ation du contenu.
+        // Création du contenu.
     	CMainPanel panel = new CMainPanel();
     	fenetre.setContentPane(panel);
 

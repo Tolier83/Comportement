@@ -9,12 +9,23 @@ public class CPheromone extends CObject {
 	public final int PHEROMONE_WIDTH = 5;
 	private int transparence = 1;
 	
+	/**
+	 * Une phéromone a une une position(x, y)
+	 * @param x
+	 * @param y
+	 */
 	public CPheromone(int x, int y) {
 		this.posX = x;
 		this.posY = y;
 		this.transparence = 1;
 	}
 	
+	/**
+	 * Une phéromone peut avoir une transparence
+	 * @param x
+	 * @param y
+	 * @param transparence
+	 */
 	public CPheromone(int x, int y, int transparence) {
 		this.posX = x;
 		this.posY = y;

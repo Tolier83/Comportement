@@ -22,7 +22,11 @@ public class CEnvironement extends Observable {
         // Création du générateur aléatoire.
         mRandomGen = new Random();
     }
-    
+
+    /**
+     * Singleton
+     * @return
+     */
     public static CEnvironement getInstance() {
 		if(sInstance == null) {
 			sInstance = new CEnvironement();
@@ -30,30 +34,48 @@ public class CEnvironement extends Observable {
 		return sInstance;
 	}
         
+    /**
+     * 
+     * @param pNourrite
+     * @return
+     */
     public CNourriture catchNourriture(CNourriture pNourrite) {
         	pNourrite.decreaseSize();
             // TODO CNAM : 2 lignes de code Ã  ajouter ici.
         	return pNourrite;
     }
     
+    /**
+     * Initialisation de l'environnement de base
+     * @param _nbBase
+     * @param _nbAgents
+     * @param x
+     * @param y
+     * @param _nbNourriture
+     */
     public void init(int _nbBase, int _nbAgents, int x, int y, int _nbNourriture) 
     {  	
     	mWidth = x;
     	mHeight = y;
     	mBaseList.clear();
+    	// Ajout du nombre de bases
     	for(int i = 0; i < _nbBase; i++)
     	{
     		mBaseList.add(new CBase(x/10.0, y/10.0, _nbAgents, Color.RED, 10));
     	}
     		
     	mNourritureList.clear();
+    	// Ajout de la nourriture sur le canvas
     	for(int i = 0; i < _nbNourriture; i++)
     	{
     		mNourritureList.add(new CNourriture(x/2.0, y/2.0, Color.BLACK, 20));
     	}
+    	// Clean des obstacles
     	mZoneAEviterList.clear();
     }
-    
+    /**
+     * 
+     */
     public void update()
     {
     	for(CBase b : mBaseList)
@@ -75,6 +97,11 @@ public class CEnvironement extends Observable {
     	}
     }
     
+    /**
+     * Gestion de la collision entre agents
+     * @param base
+     * @param mAgent
+     */
     public void searchAgentColision(CBase base, CAgent mAgent) {
     	for(CBase b : mBaseList) {
     		if(base!= b) {
