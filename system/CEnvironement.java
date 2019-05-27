@@ -64,4 +64,34 @@ public class CEnvironement extends Observable {
     	notifyObservers();
     }
     
+    public void combatAgent() {
+    	for(CBase b : mBaseList) {
+    		for(CAgent agent : b.fourmiz) {
+    			searchAgentColision(b,agent);
+    		}
+    	}
+    }
+    
+    public void searchAgentColision(CBase base, CAgent mAgent) {
+    	for(CBase b : mBaseList) {
+    		if(base!= b) {
+    			for(CAgent agent : b.fourmiz) {
+        			if((mAgent.posX == agent.posX) && (mAgent.posY == agent.posY)) {
+        				if(mAgent.mCombat > agent.mCombat) {
+        					b.killAgents(agent);
+        				}
+        				else if(mAgent.mCombat < agent.mCombat) {
+        					base.killAgents(mAgent);
+        				}
+        				else {
+        					base.killAgents(mAgent);
+        					b.killAgents(agent);
+        				}
+        			}
+        		}		
+			}
+    	}
+    }
+    
+    
 }
