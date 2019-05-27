@@ -34,7 +34,7 @@ public class CClient
 		while (!line.equals("Fin")) 
 		{ 
 			try
-			{ 
+			{ 	//line = input.readUTF();
 				line = input.readLine();
 				outputTram.writeUTF(line); 
 				//System.out.println("ouai");
