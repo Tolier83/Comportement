@@ -9,7 +9,6 @@ import system.CZoneAEviter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
@@ -22,10 +21,10 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
     private static final int NOURRITURE_COUNT = 2;
    // private static final int AGENT_WIDTH = 3;
    // private static final int AGENT_HEIGHT = 3;
-
    
     private static final int TIMER_DELAY = 0;
     private static final int TIMER_PERIOD = 10;
+    public static final Color backgroundColor = new Color(128, 128, 128);
     int incrColor =0;
     public Color[] mArrayColor = {Color.BLUE,Color.CYAN,Color.GRAY,Color.GREEN,Color.LIGHT_GRAY,Color.MAGENTA,Color.ORANGE,Color.PINK,Color.RED,Color.WHITE,Color.YELLOW};
     
@@ -35,14 +34,20 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
     private CEnvironement mEnv;
 
 
+    /**
+     * 
+     */
     public CMainPanel() {
-        // Fond noir.
-    	this.setBackground(new Color(128, 128, 128));
+        // Fond gris.
+    	this.setBackground(this.backgroundColor);
 
     	// Gestion souris.
     	this.addMouseListener(this);
     }
     
+    /**
+     * Démarrage du panel
+     */
     public void launch() {
         mEnv = CEnvironement.getInstance();
         mEnv.init(BASE_COUNT, AGENTS_COUNT, getWidth(), getHeight(),NOURRITURE_COUNT);
@@ -72,6 +77,7 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
         	b.afficherAgents(pG);
         	
         	for (CAgent agent : b.fourmiz) {
+        		// Pour chacun des agents on déssine ses phéromones
         		agent.drawPheromones(pG, b.getColor());
 			}
         }

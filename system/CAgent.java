@@ -14,6 +14,9 @@ public class CAgent extends CObject {
 	protected final static double CHANGING_DIRECTION_PROB = 0.05;
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
+	public static final int RAYON_EPOQUE = 2;
+	public static int SIZE_EPOQUE = 6;
+
 	private int indexPheromones = 0;
 
 	protected CNourriture mLoading;
@@ -26,6 +29,8 @@ public class CAgent extends CObject {
 	public double Energizer = 100;
 	public static final int maxCombat = 5;
 	public static final int minCombat = 0;
+	public ArrayList<double[]> epoque; 
+	
 	public boolean mBusy = false;
 	private int saveAlpha = 1;
 	private int saveIndexPhero;
@@ -40,6 +45,8 @@ public class CAgent extends CObject {
 		this.pheromones = new ArrayList<CPheromone>();
 		posX = pPosX;
 		posY = pPosY;
+
+		epoque = new ArrayList<double[]>();
 		this.pheromones.add(new CPheromone((int) posX, (int) posY));
 
 		mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
@@ -75,6 +82,7 @@ public class CAgent extends CObject {
 		}
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
+		
 		if (indexPheromones == 2) {
 			indexPheromones = 0;
 			if(mBusy) {
@@ -111,6 +119,7 @@ public class CAgent extends CObject {
 		}
 		index++;
 	}
+
 
 	public boolean EviterMurs() {
 
@@ -150,7 +159,7 @@ public class CAgent extends CObject {
 	}
 	
     protected void updateDirection(List<CNourriture> pNourritureList) {
-        // OÃ¹ aller ?
+        // où aller ?
         List<CNourriture> lInZone = new ArrayList();
         lInZone.addAll(pNourritureList);
         lInZone.removeIf(d -> (distance(d) > d.rayon));
@@ -177,12 +186,9 @@ public class CAgent extends CObject {
             // But atteint ?
             if (distance(lGoal) < STEP) {
                 if (mLoading == null) {
-                    //if (CEnvironement.getInstance().mRandomGen.nextDouble() < lGoal.catchingProbability()) {
                         mLoading = CEnvironement.getInstance().catchNourriture(lGoal);
-                    //}
                 }
                 else {
-                    //SCEnvironement.getInstance().putDownNourriture(lGoal);
                     mLoading = null;
                 }
                 mBusy = Boolean.TRUE;
@@ -191,11 +197,17 @@ public class CAgent extends CObject {
         normalize();
     }
     
+    /**
+     * Afficher les phéromones sur le canvas
+     * @param pG Le Canvas
+     * @param baseColor la couleur de base 
+     */
     public void drawPheromones(Graphics pG, Color baseColor) {
     		
     	if(pheromones.size() > 0 ) {
     		for (int i = 0; i < pheromones.size(); i++) {
     			if(pheromones.get(i).getTransparence() > 15) {
+    				// On se sert de la couleur de la base pour y appliquer une transparence définie par l'alpha de la phéromone
     				Color myColour = new Color(baseColor.getRed(),
     						baseColor.getGreen(),
     						baseColor.getBlue(),
@@ -206,10 +218,14 @@ public class CAgent extends CObject {
     						pheromones.get(i).PHEROMONE_HEIGHT,
     						pheromones.get(i).PHEROMONE_WIDTH
         				);
-    			}
+    			}			
     		}
     	}
     }
+    /**
+     *  Permet d'éviter les obstacles sur le canvas
+     * @return Boolean
+     */
 
 	protected boolean EviterObstacles() {
 		ArrayList<CZoneAEviter> obstacles = CEnvironement.getInstance().mZoneAEviterList;
@@ -238,13 +254,18 @@ public class CAgent extends CObject {
 		return false;
 	}
 
+	/**
+	 *  Retourne vrai ou faux si la nourriture a été trouvée sur le chemin
+	 * @return Boolean
+	 */
 	public boolean nourritureFind() {
 		if (this.mBusy == false) {
 			for (CNourriture mNourriture : CEnvironement.getInstance().mNourritureList) {
 				double mRayon = mNourriture.getRayon();
 				if ((this.posX >= (mNourriture.getPosX() - mRayon) && (this.posX) <= (mNourriture.getPosX() + mRayon))
 						&& ((this.posY >= (mNourriture.getPosY() - mRayon))
-								&& (this.posY <= (mNourriture.getPosY() + mRayon))) && mNourriture.quantite > 0) {
+								&& (this.posY <= (mNourriture.getPosY() + mRayon)))) {
+					// On réduit la taille de la nourriture
 					mNourriture.decreaseSize();
 					this.isLoaded();
 					saveAlpha = 80;
@@ -255,6 +276,62 @@ public class CAgent extends CObject {
 		return false;
 	}
 
+	/**
+	 * 
+	 */
+    public void statusEpoque() {
+    	getEpoque();
+    	boolean bloque[];
+    	boolean fullBloque;
+    	if(epoque.size() == SIZE_EPOQUE) {
+    		bloque = new boolean[SIZE_EPOQUE-1];
+    		double[] positionCercle = epoque.get(SIZE_EPOQUE-1);
+    		for (double[] eq: epoque) {
+    			int i = 0;
+    			// on regarde si elle sont dans la zone de l'epoque 
+    			if ( Math.sqrt((eq[0]-positionCercle[0])*(eq[0]-positionCercle[0])+(positionCercle[1] - eq[1])*(positionCercle[1] - eq[1])) < RAYON_EPOQUE) {
+    				bloque[i] = true;
+    			} else {
+    				bloque[i] = false;
+    			}
+    		}	
+    		fullBloque = true;
+    		for(boolean e : bloque) {
+    			if(!e) {
+    				fullBloque = false ; 
+    			}
+    		}
+    		if(fullBloque) {
+        		posX = epoque.get(3)[0] - positionCercle[0]  ;
+        		posX = epoque.get(3)[1] - positionCercle[1]  ;
+        		EpoqueZone();
+        	}
+    	}
+    }
+    
+    public void getEpoque() {
+    	double[] posCurrent = {posX,posY};
+		epoque.add(posCurrent);
+		if(epoque.size() == SIZE_EPOQUE+1) {
+			epoque.remove(SIZE_EPOQUE);
+		};
+    }
+    
+    public void EpoqueZone() {
+    	ArrayList<CZoneAEviter> obstacles = CEnvironement.getInstance().mZoneAEviterList;
+    	for (CZoneAEviter ob : obstacles) {
+			if((posX == ob.posX)&&(posY==ob.posY)) {
+				this.posX=this.posX/2;
+				this.posY=this.posY/2;
+				EpoqueZone();
+			}
+		}
+    }
+    
+    /**
+     * 
+     * @return Boolean
+     */
 	public boolean hitHome() {
 
 		for (CBase mBase : CEnvironement.getInstance().mBaseList) {
@@ -262,7 +339,6 @@ public class CAgent extends CObject {
 			if ((this.posX >= (mBase.getPosX() - mRayon) && (this.posX) <= (mBase.getPosX() + mRayon))
 					&& ((this.posY >= (mBase.getPosY() - mRayon)) && (this.posY <= (mBase.getPosY() + mRayon)))) {
 				if (this.mBusy == true) {
-					// System.out.println("j'ai posé la pêhce");
 					this.mBusy = false;
 				}
 				this.Energizer = 100;
@@ -279,12 +355,15 @@ public class CAgent extends CObject {
 		hitHome();
 		decreaseEnergizer();
 		MiseAJourPosition();
+		statusEpoque();
 	}
 
+	/**
+	 * Gestion du combat d'un agent 
+	 */
 	protected void combat() {
 		// attaque et point de vie d'un agent
 		PointdeVie = 10;
 		mCombat = (int) (Math.random() * (maxCombat - minCombat));
 	}
-
 }

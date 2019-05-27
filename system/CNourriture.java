@@ -8,6 +8,13 @@ public class CNourriture extends CObject {
 	public int quantite = 20;
 	
 	
+	/**
+	 * 
+	 * @param _x
+	 * @param _y
+	 * @param _color
+	 * @param _rayon
+	 */
 	public CNourriture(double _x, double _y, Color _color, double _rayon) {
 		this.posX = _x;
 		this.posY = _y;
@@ -15,6 +22,10 @@ public class CNourriture extends CObject {
 		this.color = _color;
 	}
 	
+	/**
+	 * Dessin de la nourriture sur le canvas
+	 * @param pG
+	 */
 	public void afficher(Graphics pG) 
 	{
 		pG.setColor(color);
@@ -23,6 +34,9 @@ public class CNourriture extends CObject {
 		
 	}
 	
+	/**
+	 * Réduit la quantité de nouriture
+	 */
 	public void decreaseSize()
 	{
 		if(quantite > 0 && rayon > 0 ) {
