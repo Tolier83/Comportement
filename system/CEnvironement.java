@@ -59,6 +59,7 @@ public class CEnvironement extends Observable {
     	for(CBase b : mBaseList)
     	{
     		b.bougerAgents();
+
     	}
     	combatAgent();
     	setChanged();

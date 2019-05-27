@@ -8,7 +8,7 @@ public class CBase extends CObject{
 	
 	public int rayon = 10;
 	public int nbAgents = 0;
-	ArrayList<CAgent> fourmiz;
+	public ArrayList<CAgent> fourmiz;
 	Color color;
 	
 	public CBase(double _x, double _y, int _nbAgents, Color _color, int _rayon)

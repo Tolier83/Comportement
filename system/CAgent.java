@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import java.awt.Color;
+import java.awt.Graphics;
 
 
 
@@ -136,6 +138,13 @@ public class CAgent extends CObject {
             }
         }
         normalize();
+    }
+    
+    public void meh(Graphics pG) {
+    	int alpha = 127; // 50% transparent
+    	Color myColour = new Color(255, 0, 0, alpha);
+    	pG.setColor(myColour);
+		pG.fillOval((int)this.posX, (int)this.posY, 30, 30);
     }
     
     protected boolean EviterObstacles() {
