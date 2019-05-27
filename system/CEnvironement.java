@@ -9,14 +9,15 @@ public class CEnvironement extends Observable {
     public double mWidth;
     public double mHeight;
     public ArrayList<CBase> mBaseList;
-    public ArrayList<CNourriture> mNourritureList;
+    public Vector<CNourriture> mNourritureList;
+    //public ArrayList<CNourriture> mNourritureList;
     public ArrayList<CZoneAEviter> mZoneAEviterList;
     
     //protected int mIterCounts = 0;
 
     private CEnvironement() {
     	mBaseList = new ArrayList<CBase>();
-    	mNourritureList = new ArrayList<CNourriture>();
+    	mNourritureList = new Vector<CNourriture>();
     	mZoneAEviterList = new ArrayList<CZoneAEviter>();
     
         // Création du générateur aléatoire.
