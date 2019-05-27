@@ -60,6 +60,7 @@ public class CEnvironement extends Observable {
     	{
     		b.bougerAgents();
     	}
+    	combatAgent();
     	setChanged();
     	notifyObservers();
     }
