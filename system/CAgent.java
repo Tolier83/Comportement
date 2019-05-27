@@ -81,7 +81,7 @@ public class CAgent extends CObject {
 			indexPheromones = 0;
 			if(mBusy) {
 				this.pheromones.add(new CPheromone((int)posX, (int)posY, saveAlpha));
-				saveAlpha = (saveAlpha - 1 > 1)?saveAlpha - 1:1;
+				saveAlpha = (saveAlpha - 1 >= 20)?saveAlpha - 1:20;
 			}else {
 				this.pheromones.add(new CPheromone((int)posX, (int)posY));
 			}
@@ -180,7 +180,7 @@ public class CAgent extends CObject {
     		
     	if(pheromones.size() > 0 ) {
     		for (int i = 0; i < pheromones.size(); i++) {
-    			if(pheromones.get(i).getTransparence() > 30) {
+    			if(pheromones.get(i).getTransparence() > 15) {
     				Color myColour = new Color(baseColor.getRed(),
     						baseColor.getGreen(),
     						baseColor.getBlue(),
