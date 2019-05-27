@@ -113,7 +113,7 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
     }
 
     public void rightClickAction(MouseEvent e) {
-       mEnv.mZoneAEviterList.add(new CZoneAEviter(e.getX(), e.getY(), 4.0));
+       mEnv.mZoneAEviterList.add(new CZoneAEviter(e.getX(), e.getY(), 20.0));
     }
     
     @Override

@@ -30,7 +30,7 @@ public class CBase extends CObject{
 	{	
 		for(int cpt = 0; cpt < this.nbAgents; cpt++)
 		{
-			this.fourmiz.get(cpt).updatePosition();
+			this.fourmiz.get(cpt).MiseAJour();
 		}
 	}
 	
