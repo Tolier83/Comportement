@@ -18,6 +18,7 @@ public class CAgent extends CObject {
 	protected final static double CHANGING_DIRECTION_PROB = 0.05;
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
+	private int indexPheromones = 0;
 	
 	protected CNourriture mLoading;
 	protected double mSpeedX;
@@ -56,7 +57,12 @@ public class CAgent extends CObject {
 		mSpeedY += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
-		this.pheromones.add(new CPheromone((int)posX, (int)posY));
+		if(indexPheromones == 10) {
+			indexPheromones = 0;
+			this.pheromones.add(new CPheromone((int)posX, (int)posY));
+		}
+		indexPheromones ++;
+
     }
 
 	
