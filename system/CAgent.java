@@ -24,7 +24,7 @@ public class CAgent extends CObject {
 	protected int mCombat;
 	public int PointdeVie;
 	public static final int maxCombat = 5;
-	public static final int minCombat = 0;
+	public static final int minCombat = 0;	
 	
 	public boolean mBusy = false;
 	
@@ -141,10 +141,10 @@ public class CAgent extends CObject {
     }
     
     public void meh(Graphics pG) {
-    	int alpha = 127; // 50% transparent
+    	int alpha = 127;
     	Color myColour = new Color(255, 0, 0, alpha);
     	pG.setColor(myColour);
-		pG.fillOval((int)this.posX, (int)this.posY, 30, 30);
+		pG.fillOval((int)this.posX, (int)this.posY, 10, 10);
     }
     
     protected boolean EviterObstacles() {
