@@ -47,6 +47,10 @@ public class CAgent extends CObject {
 		return mBusy = true;
 	}
 	
+	public boolean unLoad() {
+		return mBusy = false;
+	}
+	
 	protected void MiseAJourPosition() {
 		mSpeedX += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		mSpeedY += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
@@ -174,9 +178,26 @@ public class CAgent extends CObject {
         return false;        
     }
     
+    public boolean nourritureFind() {
+		boolean finded = false;
+		if (this.mBusy == false) {
+			for (CNourriture mNourriture : CEnvironement.getInstance().mNourritureList) {
+				double mRayon = mNourriture.getRayon();
+				if ((this.posX >= (mNourriture.getPosX() - mRayon) && (this.posX) <= (mNourriture.getPosX() + mRayon)) && ((this.posY >= (mNourriture.getPosY() - mRayon)) && (this.posY <= (mNourriture.getPosY() + mRayon)))) {
+					mNourriture.decreaseSize();
+					this.isLoaded();
+					System.out.println("j'ai trouvé de la nourriture kalash est chargé");
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+    
     protected void MiseAJour() {
     	EviterObstacles();
     	EviterMurs();
+    	nourritureFind();
         MiseAJourPosition();
     }
     
