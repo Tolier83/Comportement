@@ -16,7 +16,11 @@ import java.util.TimerTask;
 
 public class CMainPanel extends JPanel implements Observer, MouseListener {
 
-    private static final int BASE_COUNT = 1;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final int BASE_COUNT = 1;
     private static final int AGENTS_COUNT = 30;
     private static final int NOURRITURE_COUNT = 2;
    // private static final int AGENT_WIDTH = 3;
@@ -39,7 +43,7 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
      */
     public CMainPanel() {
         // Fond gris.
-    	this.setBackground(this.backgroundColor);
+    	this.setBackground(CMainPanel.backgroundColor);
 
     	// Gestion souris.
     	this.addMouseListener(this);

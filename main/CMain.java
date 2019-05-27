@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import gui.CMainPanel;
 
 public class CMain {
-    public static final String TITLE = "TestComportementTest";
+    public static final String TITLE = "Comportement Groupe 1 Raimon Molinari Nolot Luppo";
     public static final int WIDTH = 768;
     public static final int HEIGHT = 768;
 
