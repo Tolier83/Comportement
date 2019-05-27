@@ -23,6 +23,7 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
    // private static final int AGENT_WIDTH = 3;
    // private static final int AGENT_HEIGHT = 3;
 
+   
     private static final int TIMER_DELAY = 0;
     private static final int TIMER_PERIOD = 10;
     int incrColor =0;

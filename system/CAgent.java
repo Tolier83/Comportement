@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jdk.nashorn.internal.runtime.Undefined;
+
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -20,12 +22,12 @@ public class CAgent extends CObject {
 	protected CNourriture mLoading;
 	protected double mSpeedX;
 	protected double mSpeedY;
+	public List<CPheromone> pheromones;
 	
 	protected int mCombat;
 	public int PointdeVie;
 	public static final int maxCombat = 5;
 	public static final int minCombat = 0;	
-	
 	public boolean mBusy = false;
 	
 	protected void normalize() {
@@ -35,8 +37,10 @@ public class CAgent extends CObject {
 	}
 	
 	public CAgent(double pPosX, double pPosY) {
+		this.pheromones = new ArrayList<CPheromone>();
 		posX = pPosX;
 		posY = pPosY;
+		this.pheromones.add(new CPheromone((int)posX, (int)posY));
 		
 		mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
@@ -52,8 +56,10 @@ public class CAgent extends CObject {
 		mSpeedY += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
+		this.pheromones.add(new CPheromone((int)posX, (int)posY));
     }
 
+	
 	public boolean EviterMurs() {
 		
 		double lWidth = CEnvironement.getInstance().mWidth;
@@ -141,10 +147,19 @@ public class CAgent extends CObject {
     }
     
     public void meh(Graphics pG) {
-    	int alpha = 127;
-    	Color myColour = new Color(255, 0, 0, alpha);
-    	pG.setColor(myColour);
-		pG.fillOval((int)this.posX, (int)this.posY, 10, 10);
+    	if(pheromones != null) {
+    	for (CPheromone cPheromone : pheromones) {
+    		
+    		System.out.println(cPheromone.getPosX());
+    		System.out.println(cPheromone.getPosY());
+        	int alpha = 10;
+        	Color myColour = new Color(255, 0, 0, alpha);
+        	pG.setColor(myColour);
+    		pG.fillOval(cPheromone.getPosX(), cPheromone.getPosY(), 5, 5);
+		}
+    	}
+
+		
     }
     
     protected boolean EviterObstacles() {
