@@ -52,7 +52,7 @@ public class CBase extends CObject{
 		{
 			if(this.fourmiz.get(cpt).Energizer <= 0) {
 				pG.setColor(Color.BLACK);
-			}
+				this.fourmiz.get(cpt).backToHome();			}
 			else {
 				pG.setColor(color);
 			}
