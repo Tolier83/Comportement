@@ -30,7 +30,7 @@ public class CBase extends CObject{
 	{	
 		for(int cpt = 0; cpt < this.nbAgents; cpt++)
 		{
-			this.fourmiz.get(cpt).updatePosition();
+			this.fourmiz.get(cpt).MiseAJour();
 		}
 	}
 	
@@ -49,6 +49,15 @@ public class CBase extends CObject{
 					(int)this.fourmiz.get(cpt).posY,
 					(int)this.fourmiz.get(cpt).SIZE,
 					(int)this.fourmiz.get(cpt).SIZE);
+		}
+	}
+	
+
+	public void killAgents(CAgent agent, int combat) {
+		// enleve un agent si il meurt, en fonction des point de vie 
+		agent.PointdeVie = agent.PointdeVie-combat;
+		if(agent.PointdeVie <= 0) {
+			this.fourmiz.remove(agent);
 		}
 	}
 	

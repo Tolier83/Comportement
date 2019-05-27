@@ -60,8 +60,43 @@ public class CEnvironement extends Observable {
     	{
     		b.bougerAgents();
     	}
+    	combatAgent();
     	setChanged();
     	notifyObservers();
     }
+    
+    public void combatAgent() {
+    	for(CBase b : mBaseList) {
+    		for(CAgent agent : b.fourmiz) {
+    			// chaque agent d'une base regarde si il rentre en contact avaec un agent 
+    			searchAgentColision(b,agent);
+    		}
+    	}
+    }
+    
+    public void searchAgentColision(CBase base, CAgent mAgent) {
+    	for(CBase b : mBaseList) {
+    		if(base!= b) {
+    			for(CAgent agent : b.fourmiz) {
+        			if((mAgent.posX == agent.posX) && (mAgent.posY == agent.posY)) {
+        				if(mAgent.mCombat > agent.mCombat) {
+        					// si notre agent est plus faible, il perd le combat
+        					b.killAgents(agent,mAgent.mCombat);
+        				}
+        				else if(mAgent.mCombat < agent.mCombat) {
+        					// si notre agent est plus fort, il gagne le combat
+        					base.killAgents(mAgent,agent.mCombat);
+        				}
+        				else {
+        					// si notre agent est de meme attaque, les deux perdent des points 
+        					base.killAgents(mAgent,agent.mCombat);
+        					b.killAgents(agent,mAgent.mCombat);
+        				}
+        			}
+        		}		
+			}
+    	}
+    }
+    
     
 }
