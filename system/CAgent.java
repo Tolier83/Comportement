@@ -26,6 +26,7 @@ public class CAgent extends CObject {
 	
 	protected int mCombat;
 	public int PointdeVie;
+	public double Energizer = 100;
 	public static final int maxCombat = 5;
 	public static final int minCombat = 0;	
 	public boolean mBusy = false;
@@ -89,7 +90,20 @@ public class CAgent extends CObject {
 		indexPheromones ++;
 
     }
-
+	int index = 0;
+	public void decreaseEnergizer() {
+		if(index == 20){
+			index = 0;
+			if(this.Energizer > 0) {
+				double n = (double)(Math.random() * 3);
+				this.Energizer = this.Energizer - n;
+			}
+				
+			//else
+				//returnHome();
+		}
+		index++;
+	}
 	
 	public boolean EviterMurs() {
 		
@@ -135,7 +149,7 @@ public class CAgent extends CObject {
 	}
 	
     protected void updateDirection(List<CNourriture> pNourritureList) {
-        // Où aller ?
+        // OÃ¹ aller ?
         List<CNourriture> lInZone = new ArrayList();
         lInZone.addAll(pNourritureList);
         lInZone.removeIf(d -> (distance(d) > d.rayon));
@@ -244,16 +258,18 @@ public class CAgent extends CObject {
 	}
     
     public boolean hitHome() {
-    	if (this.mBusy == true) {
+    	
     		for (CBase mBase : CEnvironement.getInstance().mBaseList) {
     			double mRayon = mBase.getRayon();
-    			if ((this.posX >= (mBase.getPosX() - mRayon) && (this.posX) <= (mBase.getPosX() + mRayon)) && ((this.posY >= (mBase.getPosY() - mRayon)) && (this.posY <= (mBase.getPosY() + mRayon)))) {
-					//System.out.println("j'ai pos� la p�hce");
-    				this.mBusy = false;
+				if ((this.posX >= (mBase.getPosX() - mRayon) && (this.posX) <= (mBase.getPosX() + mRayon)) && ((this.posY >= (mBase.getPosY() - mRayon)) && (this.posY <= (mBase.getPosY() + mRayon)))) {
+					if (this.mBusy == true) {
+						//System.out.println("j'ai posé la pêhce");
+						this.mBusy = false;
+					}
+					this.Energizer = 100;
 					return true;
 				}
     		}
-    	}
 		return false;
     }
     
@@ -262,7 +278,8 @@ public class CAgent extends CObject {
     	EviterMurs();
     	nourritureFind();
     	hitHome();
-        MiseAJourPosition();
+    	decreaseEnergizer();
+    	MiseAJourPosition();
     }
     
     protected void combat() { 
