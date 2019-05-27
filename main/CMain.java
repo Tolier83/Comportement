@@ -1,16 +1,18 @@
 package main;
 
 import javax.swing.JFrame;
-
+import java.net.*; 
+import java.io.*; 
 import gui.CMainPanel;
+import main.CClient;
 
 public class CMain {
     public static final String TITLE = "TestComportementTest";
     public static final int WIDTH = 768;
     public static final int HEIGHT = 768;
-
-
+ 
     public static void main(String[] args) {
+    	 
     	JFrame fenetre = new JFrame();
     	fenetre.setTitle(TITLE);
     	fenetre.setSize(WIDTH, HEIGHT);
@@ -27,5 +29,6 @@ public class CMain {
 
         // Lancement processus.
     	panel.launch();
+    	CClient client = new CClient("localhost", 40000);
     }
 }
