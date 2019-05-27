@@ -46,9 +46,16 @@ public class CBase extends CObject{
 	
 	public void afficherAgents(Graphics pG)
 	{
-		pG.setColor(color);
+		
+		
 		for(int cpt = 0; cpt < this.nbAgents; cpt++)
 		{
+			if(this.fourmiz.get(cpt).Energizer <= 0) {
+				pG.setColor(Color.BLACK);
+			}
+			else {
+				pG.setColor(color);
+			}
 			pG.fillOval((int)this.fourmiz.get(cpt).posX,
 					(int)this.fourmiz.get(cpt).posY,
 					(int)this.fourmiz.get(cpt).SIZE,
