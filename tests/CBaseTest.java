@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 class CBaseTest {
 
-	
 	@Test 
 	void testIfColorReturned() {
 		CBase base = new CBase(1, 1, 12, Color.BLACK, 10);
