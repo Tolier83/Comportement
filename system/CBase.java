@@ -64,5 +64,17 @@ public class CBase extends CObject{
 			this.fourmiz.remove(agent);
 		}
 	}
+
+	public double getRayon() {
+		return this.rayon;
+	}
+
+	public double getPosX() {
+		return this.posX;
+	}
+	
+	public double getPosY() {
+		return this.posY;
+	}
 	
 }
