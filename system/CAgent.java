@@ -12,7 +12,7 @@ import java.awt.Graphics;
 //Etat de combat -> recuperation de nourriture
 
 public class CAgent extends CObject {
-	protected final static double STEP = 1;
+	protected final static double STEP = 4;
 	protected final static double CHANGING_DIRECTION_PROB = 0.05;
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
@@ -52,8 +52,10 @@ public class CAgent extends CObject {
 	}
 	
 	protected void MiseAJourPosition() {
-		mSpeedX += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
-		mSpeedY += CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+		 if (CEnvironement.getInstance().mRandomGen.nextDouble() < CHANGING_DIRECTION_PROB) {
+             mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+             mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
+         }
 		posX += STEP * mSpeedX;
 		posY += STEP * mSpeedY;
     }
@@ -114,7 +116,6 @@ public class CAgent extends CObject {
 
         // Avons-nous un but ?
         if (lGoal == null || mBusy) {
-            // Déplacement aléatoire
             if (CEnvironement.getInstance().mRandomGen.nextDouble() < CHANGING_DIRECTION_PROB) {
                 mSpeedX = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
                 mSpeedY = CEnvironement.getInstance().mRandomGen.nextDouble() - 0.5;
