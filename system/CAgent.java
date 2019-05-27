@@ -147,16 +147,16 @@ public class CAgent extends CObject {
     }
     
     public void meh(Graphics pG) {
-    	if(pheromones != null) {
-    	for (CPheromone cPheromone : pheromones) {
     		
-    		System.out.println(cPheromone.getPosX());
-    		System.out.println(cPheromone.getPosY());
-        	int alpha = 10;
-        	Color myColour = new Color(255, 0, 0, alpha);
-        	pG.setColor(myColour);
-    		pG.fillOval(cPheromone.getPosX(), cPheromone.getPosY(), 5, 5);
-		}
+    	if(pheromones.size() > 0) {
+    		for (int i = 0; i < pheromones.size(); i++) {
+            	int alpha = 5;
+            	Color myColour = new Color(255, 0, 0, alpha);
+            	pG.setColor(myColour);
+        		pG.fillOval(pheromones.get(i).getPosX(), pheromones.get(i).getPosY(), 5, 5);
+			}
+    		
+
     	}
 
 		
