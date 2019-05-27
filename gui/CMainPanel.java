@@ -81,10 +81,11 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
         		agent.drawPheromones(pG, b.getColor());
 			}
         }
-        for(CNourriture n : mEnv.mNourritureList)
-        {
-        	n.afficher(pG);
-        } 
+        	for(CNourriture n : mEnv.mNourritureList)
+            {
+            	n.afficher(pG);
+            } 
+        
         for(CZoneAEviter z : mEnv.mZoneAEviterList)
         {
         	z.afficher(pG);

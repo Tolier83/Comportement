@@ -93,7 +93,6 @@ public class CAgent extends CObject {
 			}
 		}
 		indexPheromones++;
-
 	}
 	
 	public void backToHome() {
@@ -117,9 +116,6 @@ public class CAgent extends CObject {
 				double n = (double) (Math.random() * 3);
 				this.Energizer = this.Energizer - n;
 			}
-
-			// else
-			// returnHome();
 		}
 		index++;
 	}
@@ -163,7 +159,7 @@ public class CAgent extends CObject {
 	}
 	
     protected void updateDirection(List<CNourriture> pNourritureList) {
-        // où aller ?
+        // oÃ¹ aller ?
         List<CNourriture> lInZone = new ArrayList();
         lInZone.addAll(pNourritureList);
         lInZone.removeIf(d -> (distance(d) > d.rayon));
@@ -202,7 +198,7 @@ public class CAgent extends CObject {
     }
     
     /**
-     * Afficher les phéromones sur le canvas
+     * Afficher les phÃ©romones sur le canvas
      * @param pG Le Canvas
      * @param baseColor la couleur de base 
      */
@@ -211,7 +207,7 @@ public class CAgent extends CObject {
     	if(pheromones.size() > 0 ) {
     		for (int i = 0; i < pheromones.size(); i++) {
     			if(pheromones.get(i).getTransparence() > 15) {
-    				// On se sert de la couleur de la base pour y appliquer une transparence définie par l'alpha de la phéromone
+    				// On se sert de la couleur de la base pour y appliquer une transparence dÃ©finie par l'alpha de la phÃ©romone
     				Color myColour = new Color(baseColor.getRed(),
     						baseColor.getGreen(),
     						baseColor.getBlue(),
@@ -227,9 +223,10 @@ public class CAgent extends CObject {
     	}
     }
     /**
-     *  Permet d'éviter les obstacles sur le canvas
+     *  Permet d'Ã©viter les obstacles sur le canvas
      * @return Boolean
      */
+
 	protected boolean EviterObstacles() {
 		ArrayList<CZoneAEviter> obstacles = CEnvironement.getInstance().mZoneAEviterList;
 		if (!obstacles.isEmpty()) {
@@ -258,7 +255,7 @@ public class CAgent extends CObject {
 	}
 
 	/**
-	 *  Retourne vrai ou faux si la nourriture a été trouvée sur le chemin
+	 *  Retourne vrai ou faux si la nourriture a Ã©tÃ© trouvÃ©e sur le chemin
 	 * @return Boolean
 	 */
 	public boolean nourritureFind() {
@@ -268,7 +265,7 @@ public class CAgent extends CObject {
 				if ((this.posX >= (mNourriture.getPosX() - mRayon) && (this.posX) <= (mNourriture.getPosX() + mRayon))
 						&& ((this.posY >= (mNourriture.getPosY() - mRayon))
 								&& (this.posY <= (mNourriture.getPosY() + mRayon)))) {
-					// On réduit la taille de la nourriture
+					// On rÃ©duit la taille de la nourriture
 					mNourriture.decreaseSize();
 					this.isLoaded();
 					saveAlpha = 80;
