@@ -17,7 +17,7 @@ public class CAgent extends CObject {
 	public static final double DISTANCE_MIN = 5;
 	public static final double SIZE = 5;
 	public static final int RAYON_EPOQUE = 2;
-	public static int SIZE_EPOQUE = 9;
+	public static int SIZE_EPOQUE = 6;
 	
 	protected CNourriture mLoading;
 	protected double mSpeedX;
@@ -205,7 +205,7 @@ public class CAgent extends CObject {
     	EviterMurs();
     	nourritureFind();
         MiseAJourPosition();
-        //statusEpoque();
+        statusEpoque();
     }
     
     protected void combat() { 
@@ -216,26 +216,30 @@ public class CAgent extends CObject {
     
     public void statusEpoque() {
     	getEpoque();
-    	boolean bloque = false;
-    	if(epoque.size() == 4) {
+    	boolean bloque[];
+    	boolean fullBloque;
+    	if(epoque.size() == SIZE_EPOQUE) {
+    		bloque = new boolean[SIZE_EPOQUE-1];
     		double[] positionCercle = epoque.get(SIZE_EPOQUE-1);
     		for (double[] eq: epoque) {
+    			int i = 0;
+    			// on regarde si elle sont dans la zone de l'epoque 
     			if ( Math.sqrt((eq[0]-positionCercle[0])*(eq[0]-positionCercle[0])+(positionCercle[1] - eq[1])*(positionCercle[1] - eq[1])) < RAYON_EPOQUE) {
-    				bloque = true;
+    				bloque[i] = true;
     			} else {
-    				bloque = false;
+    				bloque[i] = false;
     			}
     		}	
-    		if(bloque) {
-        		ArrayList<CZoneAEviter> obstacles = CEnvironement.getInstance().mZoneAEviterList;
-        		this.posX = positionCercle[0] - epoque.get(3)[0];
-        		this.posX = positionCercle[1] - epoque.get(3)[1];
-        		for (CZoneAEviter ob : obstacles) {
-        			while((posX == ob.posX)&&(posY==ob.posY)) {
-        				this.posX=this.posX/2;
-        				this.posY=this.posY/2;
-        			}
-        		}
+    		fullBloque = true;
+    		for(boolean e : bloque) {
+    			if(!e) {
+    				fullBloque = false ; 
+    			}
+    		}
+    		if(fullBloque) {
+        		posX = epoque.get(3)[0] - positionCercle[0]  ;
+        		posX = epoque.get(3)[1] - positionCercle[1]  ;
+        		EpoqueZone();
         	}
     	}
     }
@@ -246,6 +250,17 @@ public class CAgent extends CObject {
 		if(epoque.size() == SIZE_EPOQUE+1) {
 			epoque.remove(SIZE_EPOQUE);
 		};
+    }
+    
+    public void EpoqueZone() {
+    	ArrayList<CZoneAEviter> obstacles = CEnvironement.getInstance().mZoneAEviterList;
+    	for (CZoneAEviter ob : obstacles) {
+			if((posX == ob.posX)&&(posY==ob.posY)) {
+				this.posX=this.posX/2;
+				this.posY=this.posY/2;
+				EpoqueZone();
+			}
+		}
     }
     
     
