@@ -1,13 +1,12 @@
 package system;
 
-import com.sun.prism.paint.Color;
 
 public class CPheromone {
 	
 	private int posX;
 	private int posY;
-	public final int PHEROMONE_HEIGHT = 10; 
-	public final int PHEROMONE_WIDTH = 10;
+	public final int PHEROMONE_HEIGHT = 5; 
+	public final int PHEROMONE_WIDTH = 5;
 	public int PHEROMONE_ALPHA = 1;
 	
 	public CPheromone(int x, int y) {

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import jdk.nashorn.internal.runtime.Undefined;
-
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -229,7 +227,7 @@ public class CAgent extends CObject {
     		for (CBase mBase : CEnvironement.getInstance().mBaseList) {
     			double mRayon = mBase.getRayon();
     			if ((this.posX >= (mBase.getPosX() - mRayon) && (this.posX) <= (mBase.getPosX() + mRayon)) && ((this.posY >= (mBase.getPosY() - mRayon)) && (this.posY <= (mBase.getPosY() + mRayon)))) {
-					System.out.println("j'ai posé la pêhce");
+					//System.out.println("j'ai posé la pêhce");
 					return true;
 				}
     		}
