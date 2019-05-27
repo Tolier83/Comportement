@@ -8,12 +8,11 @@ public class CPheromone {
 	private int posY;
 	public final int PHEROMONE_HEIGHT = 10; 
 	public final int PHEROMONE_WIDTH = 10;
-	public final int PHEROMONE_ALPHA = 20;
+	public int PHEROMONE_ALPHA = 1;
 	
 	public CPheromone(int x, int y) {
 		this.posX = x;
 		this.posY = y;
-	
 	}
 	
 	public int getPosX() {

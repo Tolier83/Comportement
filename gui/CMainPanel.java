@@ -70,11 +70,10 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
         {
         	b.afficherBase(pG);
         	b.afficherAgents(pG);
-        	for (CAgent agent : b.fourmiz) {
-        		
-        		agent.drawPheromones(pG);
-			}
         	
+        	for (CAgent agent : b.fourmiz) {
+        		agent.drawPheromones(pG, b.getColor());
+			}
         }
         for(CNourriture n : mEnv.mNourritureList)
         {
