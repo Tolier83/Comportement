@@ -17,9 +17,12 @@ public class CServer
 			System.out.println("Waiting for a client ..."); 
 			socket = server.accept(); 
 			System.out.println("Client accepted"); 
-
+			DataOutputStream outputTram = new DataOutputStream(socket.getOutputStream());
+			outputTram.writeUTF("ALOOOOO"); 
+			outputTram.flush(); // send the message
+			outputTram.close(); 
 			// takes input from the client socket 
-			inputTram = new DataInputStream( 
+		/*	inputTram = new DataInputStream( 
 				new BufferedInputStream(socket.getInputStream())); 
 
 			String line = ""; 
@@ -41,7 +44,7 @@ public class CServer
 
 			// close connection 
 			socket.close(); 
-			inputTram.close(); 
+			inputTram.close(); */
 		} 
 		catch(IOException i) 
 		{ 
@@ -51,6 +54,6 @@ public class CServer
 
 	public static void main(String args[]) 
 	{ 
-		CServer server = new CServer(41000); 
+		CServer server = new CServer(40000); 
 	} 
 } 
