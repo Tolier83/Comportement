@@ -10,7 +10,7 @@ public class CBase extends CObject{
 	public ArrayList<CAgent> fourmiz;
 	public Color color;
 	public static int maxCombat = 10;
-	public static int minCombat = 0;
+	public static int minCombat = 4;
 	
 	/**
 	 * 
@@ -94,7 +94,7 @@ public class CBase extends CObject{
 	public void killAgents(CAgent agent, ArrayList<CAgent> cimetiere) {
 		// enleve un agent si il meurt, en fonction des point de vie 		
 		int combat = (int) (Math.random() * (maxCombat - minCombat));		
-		agent.PointdeVie -= 10;		
+		agent.PointdeVie -= combat;		
 			
 		if(agent.PointdeVie <= 0) {			
 			cimetiere.add(agent);	
