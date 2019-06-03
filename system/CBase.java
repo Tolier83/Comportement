@@ -8,7 +8,9 @@ public class CBase extends CObject{
 	public int rayon = 10;
 	public int nbAgents = 0;
 	public ArrayList<CAgent> fourmiz;
-	private Color color;
+	public Color color;
+	public static int maxCombat = 10;
+	public static int minCombat = 0;
 	
 	/**
 	 * 
@@ -89,12 +91,14 @@ public class CBase extends CObject{
 	 * @param agent
 	 * @param combat
 	 */
-	public void killAgents(CAgent agent, int combat) {
-		// enleve un agent si il meurt, en fonction des point de vie 
-		agent.PointdeVie = agent.PointdeVie-combat;
-		if(agent.PointdeVie <= 0) {
-			this.fourmiz.remove(agent);
-		}
+	public void killAgents(CAgent agent, ArrayList<CAgent> cimetiere) {
+		// enleve un agent si il meurt, en fonction des point de vie 		
+		int combat = (int) (Math.random() * (maxCombat - minCombat));		
+		agent.PointdeVie -= 10;		
+			
+		if(agent.PointdeVie <= 0) {			
+			cimetiere.add(agent);	
+		}		
 	}
 
 	public double getRayon() {

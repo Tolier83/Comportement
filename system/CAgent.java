@@ -24,11 +24,10 @@ public class CAgent extends CObject {
 	protected double mSpeedY;
 	public List<CPheromone> pheromones;
 
-	protected int mCombat;
+
 	public int PointdeVie = 10;
 	public double Energizer = 100;
-	public static int maxCombat = 5;
-	public static int minCombat = 0;
+
 	public ArrayList<double[]> epoque; 
 	
 	public boolean mBusy = false;
@@ -358,13 +357,5 @@ public class CAgent extends CObject {
 		statusEpoque();
 	}
 
-	/**
-	 * Gestion du combat d'un agent 
-	 */
-	protected void combat() {
-		// attaque et point de vie d'un agent
-		mCombat = (int) (Math.random() * (maxCombat - minCombat));
-		
-		PointdeVie -= mCombat;
-	}
+
 }
