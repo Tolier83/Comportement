@@ -364,9 +364,7 @@ public class CAgent extends CObject {
 	protected void combat() {
 		// attaque et point de vie d'un agent
 		mCombat = (int) (Math.random() * (maxCombat - minCombat));
-		minCombat = (int) Math.ceil(minCombat);
-		maxCombat = (int) Math.floor(maxCombat);
-		mCombat = (int) (Math.floor(Math.random() * (maxCombat - minCombat +1)) + minCombat);
+		
 		PointdeVie -= mCombat;
 	}
 }
