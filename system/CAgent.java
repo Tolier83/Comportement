@@ -27,8 +27,8 @@ public class CAgent extends CObject {
 	protected int mCombat;
 	public int PointdeVie = 10;
 	public double Energizer = 100;
-	public static final int maxCombat = 5;
-	public static final int minCombat = 0;
+	public static int maxCombat = 5;
+	public static int minCombat = 0;
 	public ArrayList<double[]> epoque; 
 	
 	public boolean mBusy = false;
@@ -364,6 +364,9 @@ public class CAgent extends CObject {
 	protected void combat() {
 		// attaque et point de vie d'un agent
 		mCombat = (int) (Math.random() * (maxCombat - minCombat));
+		minCombat = (int) Math.ceil(minCombat);
+		maxCombat = (int) Math.floor(maxCombat);
+		mCombat = (int) (Math.floor(Math.random() * (maxCombat - minCombat +1)) + minCombat);
 		PointdeVie -= mCombat;
 	}
 }
