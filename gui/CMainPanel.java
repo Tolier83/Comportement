@@ -9,7 +9,6 @@ import system.CZoneAEviter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Timer;
@@ -18,11 +17,12 @@ import java.util.TimerTask;
 public class CMainPanel extends JPanel implements Observer, MouseListener {
 
     private static final int BASE_COUNT = 1;
-    private static final int AGENTS_COUNT = 5;
+    private static final int AGENTS_COUNT = 30;
     private static final int NOURRITURE_COUNT = 2;
    // private static final int AGENT_WIDTH = 3;
    // private static final int AGENT_HEIGHT = 3;
 
+   
     private static final int TIMER_DELAY = 0;
     private static final int TIMER_PERIOD = 10;
     int incrColor =0;
@@ -69,11 +69,10 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
         {
         	b.afficherBase(pG);
         	b.afficherAgents(pG);
-        	for (CAgent agent : b.fourmiz) {
-        		//agent.meh(pG);
-				
-			}
         	
+        	for (CAgent agent : b.fourmiz) {
+        		agent.drawPheromones(pG, b.getColor());
+			}
         }
         for(CNourriture n : mEnv.mNourritureList)
         {
@@ -104,7 +103,7 @@ public class CMainPanel extends JPanel implements Observer, MouseListener {
     
 	public void moletteClickAction(MouseEvent e)
 	{
-		mEnv.mNourritureList.add(new CNourriture(e.getX(), e.getY(), Color.BLACK, 2.0));
+		mEnv.mNourritureList.add(new CNourriture(e.getX(), e.getY(), Color.BLACK, 20));
 	}
     public void leftClickAction(MouseEvent e)
     { 
